@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Other Collection Report API - Test Runner</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            margin: 20px;
+            background: #1e1e1e;
+            color: #d4d4d4;
+        }
+        h1 {
+            color: #4ec9b0;
+        }
+        h2 {
+            color: #569cd6;
+            margin-top: 30px;
+        }
+        .test-button {
+            background: #0e639c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            border-radius: 3px;
+        }
+        .test-button:hover {
+            background: #1177bb;
+        }
+        .output {
+            background: #252526;
+            border: 1px solid #3e3e42;
+            padding: 15px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .success {
+            color: #4ec9b0;
+        }
+        .error {
+            color: #f48771;
+        }
+        .warning {
+            color: #dcdcaa;
+        }
+        .loading {
+            color: #569cd6;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Other Collection Report API - Test Runner</h1>
+    
+    <p>This page runs comprehensive tests on the Other Collection Report API to identify filtering issues.</p>
+    
+    <h2>📋 Test Scripts</h2>
+    
+    <button class="test-button" onclick="runTest('test_database_direct.php', 'db-output')">
+        1. Check Database (Payment 945)
+    </button>
+    <div id="db-output" class="output" style="display:none;"></div>
+    
+    <button class="test-button" onclick="runTest('test_comprehensive_debug.php', 'debug-output')">
+        2. Comprehensive Debug (All Filter Combinations)
+    </button>
+    <div id="debug-output" class="output" style="display:none;"></div>
+    
+    <button class="test-button" onclick="runTest('test_api_endpoint.php', 'api-output')">
+        3. Test API Endpoint (Multiple Scenarios)
+    </button>
+    <div id="api-output" class="output" style="display:none;"></div>
+    
+    <button class="test-button" onclick="runTest('test_specific_payment.php', 'specific-output')">
+        4. Test Specific Payment (945)
+    </button>
+    <div id="specific-output" class="output" style="display:none;"></div>
+    
+    <button class="test-button" onclick="runTest('test_date_range.php', 'date-output')">
+        5. Test Date Range Logic
+    </button>
+    <div id="date-output" class="output" style="display:none;"></div>
+    
+    <h2>🎯 Quick API Test</h2>
+    
+    <p>Test the API directly with corrected parameters:</p>
+    
+    <button class="test-button" onclick="testAPI('all-filters')">
+        Test: All Filters (Fee Type 4)
+    </button>
+    <button class="test-button" onclick="testAPI('no-collector')">
+        Test: Without Collector
+    </button>
+    <button class="test-button" onclick="testAPI('no-feetype')">
+        Test: Without Fee Type
+    </button>
+    <button class="test-button" onclick="testAPI('date-only')">
+        Test: Date Range Only
+    </button>
+    
+    <div id="api-test-output" class="output" style="display:none;"></div>
+    
+    <h2>📚 Documentation</h2>
+    <ul>
+        <li><a href="documentation/ROOT_CAUSE_FOUND.md" target="_blank">Root Cause Analysis</a></li>
+        <li><a href="documentation/OTHER_COLLECTION_REPORT_TESTING_GUIDE.md" target="_blank">Testing Guide</a></li>
+        <li><a href="documentation/OTHER_COLLECTION_REPORT_FIX_SUMMARY.md" target="_blank">Fix Summary</a></li>
+    </ul>
+    
+    <script>
+        function runTest(script, outputId) {
+            const output = document.getElementById(outputId);
+            output.style.display = 'block';
+            output.innerHTML = '<span class="loading">⏳ Running test...</span>';
+            
+            fetch(script)
+                .then(response => response.text())
+                .then(data => {
+                    output.innerHTML = formatOutput(data);
+                })
+                .catch(error => {
+                    output.innerHTML = '<span class="error">✗ Error: ' + error + '</span>';
+                });
+        }
+        
+        function testAPI(testType) {
+            const output = document.getElementById('api-test-output');
+            output.style.display = 'block';
+            output.innerHTML = '<span class="loading">⏳ Testing API...</span>';
+            
+            let requestBody = {};
+            
+            switch(testType) {
+                case 'all-filters':
+                    requestBody = {
+                        session_id: '21',
+                        class_id: '16',
+                        section_id: '26',
+                        feetype_id: '4',
+                        collect_by_id: '6',
+                        from_date: '2025-09-01',
+                        to_date: '2025-10-11'
+                    };
+                    break;
+                case 'no-collector':
+                    requestBody = {
+                        session_id: '21',
+                        class_id: '16',
+                        section_id: '26',
+                        feetype_id: '4',
+                        from_date: '2025-09-01',
+                        to_date: '2025-10-11'
+                    };
+                    break;
+                case 'no-feetype':
+                    requestBody = {
+                        session_id: '21',
+                        class_id: '16',
+                        section_id: '26',
+                        collect_by_id: '6',
+                        from_date: '2025-09-01',
+                        to_date: '2025-10-11'
+                    };
+                    break;
+                case 'date-only':
+                    requestBody = {
+                        from_date: '2025-09-01',
+                        to_date: '2025-10-11'
+                    };
+                    break;
+            }
+            
+            fetch('other-collection-report/filter', {
+                method: 'POST',
+                headers: {
+                    'Client-Service': 'smartschool',
+                    'Auth-Key': 'schoolAdmin@',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+            .then(response => response.json())
+            .then(data => {
+                let result = 'Request:\n' + JSON.stringify(requestBody, null, 2) + '\n\n';
+                result += 'Response:\n';
+                result += 'Status: ' + data.status + '\n';
+                result += 'Message: ' + data.message + '\n';
+                result += 'Total Records: ' + data.summary.total_records + '\n';
+                result += 'Total Paid: ' + data.summary.total_paid + '\n\n';
+                
+                if (data.summary.total_records > 0) {
+                    result += 'First Record:\n';
+                    const first = data.data[0];
+                    result += '  Payment ID: ' + first.payment_id + '\n';
+                    result += '  Date: ' + first.date + '\n';
+                    result += '  Student: ' + first.student_name + '\n';
+                    result += '  Fee Type: ' + first.fee_type + '\n';
+                    result += '  Amount: ' + first.paid + '\n';
+                    
+                    // Check for payment 945
+                    let found945 = false;
+                    for (let record of data.data) {
+                        if (record.payment_id.startsWith('945/')) {
+                            found945 = true;
+                            result += '\n✓ Payment 945 FOUND in results!\n';
+                            break;
+                        }
+                    }
+                    if (!found945) {
+                        result += '\n✗ Payment 945 NOT in results\n';
+                    }
+                } else {
+                    result += '✗ No data returned\n';
+                    if (data.debug) {
+                        result += '\nDebug: ' + data.debug.note + '\n';
+                    }
+                }
+                
+                output.innerHTML = formatOutput(result);
+            })
+            .catch(error => {
+                output.innerHTML = '<span class="error">✗ Error: ' + error + '</span>';
+            });
+        }
+        
+        function formatOutput(text) {
+            // Highlight success/error/warning markers
+            text = text.replace(/✓/g, '<span class="success">✓</span>');
+            text = text.replace(/✗/g, '<span class="error">✗</span>');
+            text = text.replace(/⚠️/g, '<span class="warning">⚠️</span>');
+            text = text.replace(/YES ✓/g, '<span class="success">YES ✓</span>');
+            text = text.replace(/NO ✗/g, '<span class="error">NO ✗</span>');
+            return text;
+        }
+    </script>
+</body>
+</html>
+

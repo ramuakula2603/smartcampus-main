@@ -1,0 +1,188 @@
+/* ========================================
+   Quick Links Modal - Card Grid Layout
+   Matches reference design using cards
+   Uses existing classes:
+     - .card-columns-sidebar  (grid container)
+     - .card-sidebar          (each section card)
+   Relies on header-modern.css CSS variables
+   ======================================== */
+
+/* Quick Links header + search (use IDs, no new modal classes) */
+
+#quickLinksHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px 8px 18px;
+}
+
+#quickLinksTitle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+#quickLinksTitle i {
+  font-size: 14px;
+}
+
+#quickLinksSearch {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#quickLinksSearchInput {
+  width: 220px;
+  height: 30px;
+  padding: 4px 8px;
+  font-size: 13px;
+}
+
+#quickLinksClear {
+  border: none;
+  background: transparent;
+  color: #6b7280;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+#quickLinksNoResults {
+  font-size: 12px;
+  color: #9ca3af;
+  padding: 0 20px 6px 20px;
+}
+
+/* Grid container for all Quick Links cards */
+
+.card-columns-sidebar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  column-gap: 24px;
+  row-gap: 20px;
+  padding: 6px 18px 18px 18px;
+  margin: 0;
+  list-style: none;
+}
+
+/* Single card for one section (Admissions, HR, etc.) */
+
+.card-sidebar {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e3e8f0;
+  padding: 16px 18px 14px 18px;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.18s ease-out;
+}
+
+.card-sidebar:hover {
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+  border-color: var(--header-primary);
+  transform: translateY(-2px);
+}
+
+/* Card header (title + icon) */
+
+.card-sidebar h4 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--header-text-primary);
+}
+
+.card-sidebar h4 i {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--header-primary);
+  background: #eef2ff;
+}
+
+/* List of links inside each card */
+
+.card-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card-sidebar ul li + li {
+  margin-top: 2px;
+}
+
+.card-sidebar ul li a {
+  display: block;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+  text-decoration: none;
+  padding: 2px 0;
+  border-radius: 4px;
+  transition: all 0.15s ease-out;
+  text-align: left;
+  white-space: nowrap;        /* keep each item on a single line */
+  overflow: hidden;
+  text-overflow: ellipsis;    /* truncate very long labels instead of wrapping */
+}
+
+.card-sidebar ul li a:hover {
+  background: #eef2ff;
+  color: var(--header-primary);
+  padding-left: 4px;
+}
+
+/* Responsive behaviour for different screen sizes */
+
+@media (max-width: 1199px) {
+  .card-columns-sidebar {
+    grid-template-columns: repeat(3, minmax(220px, 1fr));
+  }
+}
+
+/* Keep 3 columns down to tablet widths; adjust padding a bit */
+@media (max-width: 768px) {
+  .card-columns-sidebar {
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
+    padding: 16px 14px;
+  }
+}
+
+/* Below 768px show 2 columns */
+@media (max-width: 767px) {
+  .card-columns-sidebar {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
+    row-gap: 16px;
+    padding: 16px 12px;
+  }
+
+  .card-sidebar {
+    padding: 14px 14px 12px 14px;
+  }
+}
+
+/* Below 480px show 1 column and make modal full-width */
+@media (max-width: 480px) {
+  .card-columns-sidebar {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+
+  .quick-links-modal .modal-dialog {
+    width: 100%;
+    /* Push the dialog slightly down so the close button is fully visible */
+    margin: 40px 10px 10px;
+  }
+}

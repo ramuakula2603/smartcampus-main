@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Check Table Structure</title>
+</head>
+<body>
+    <h1>Hall Ticket Generation Table Structure</h1>
+    <?php
+    // Database configuration
+    $host = 'localhost';
+    $username = 'root';
+    $password = '';
+    $database = 'amt';
+
+    // Create connection
+    $conn = new mysqli($host, $username, $password, $database);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // SQL to describe the table
+    $sql = "DESCRIBE halltickect_generation";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        echo "<table border='1' style='border-collapse: collapse; width: 100%;'>";
+        echo "<tr style='background-color: #f2f2f2;'>";
+        echo "<th style='padding: 8px; text-align: left;'>Field</th>";
+        echo "<th style='padding: 8px; text-align: left;'>Type</th>";
+        echo "<th style='padding: 8px; text-align: left;'>Null</th>";
+        echo "<th style='padding: 8px; text-align: left;'>Key</th>";
+        echo "<th style='padding: 8px; text-align: left;'>Default</th>";
+        echo "<th style='padding: 8px; text-align: left;'>Extra</th>";
+        echo "</tr>";
+        
+        while($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . $row['Field'] . "</td>";
+            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . $row['Type'] . "</td>";
+            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . $row['Null'] . "</td>";
+            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . $row['Key'] . "</td>";
+            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . ($row['Default'] ?? 'NULL') . "</td>";
+            echo "<td style='padding: 8px; border: 1px solid #ddd;'>" . $row['Extra'] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>No results found.</p>";
+    }
+
+    $conn->close();
+    ?>
+</body>
+</html>

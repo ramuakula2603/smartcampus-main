@@ -1,0 +1,199 @@
+{
+  "status": 1,
+  "message": "Profile retrieved successfully.",
+  "staff_id": "6",
+  "basic_info": {
+    "id": "6",
+    "employee_id": "200226",
+    "name": "MAHA LAKSHMI",
+    "surname": "SALLA",
+    "full_name": "MAHA LAKSHMI SALLA",
+    "designation": "2",
+    "designation_name": "Accountant",
+    "department": "9",
+    "department_name": "Finance",
+    "user_type": "",
+    "role_id": "",
+    "is_active": "1",
+    "date_of_joining": "2023-08-01",
+    "date_of_leaving": null,
+    "disable_at": null
+  },
+  "contact_info": {
+    "email": "mahalakshmisalla70@gmail.com",
+    "contact_no": "8328595488",
+    "emergency_contact_no": "6303727148"
+  },
+  "personal_info": {
+    "gender": "Female",
+    "dob": "2002-11-26",
+    "marital_status": "Single",
+    "father_name": "Salla Vijay chandhra",
+    "mother_name": "Salla Parameshwari",
+    "qualification": "B.sc computer science",
+    "work_exp": "1 year",
+    "note": ""
+  },
+  "address_info": {
+    "local_address": "Bc colony ,venkatagiri,tirupati-524404",
+    "permanent_address": "Bc colony ,venkatagiri,tirupati-524404"
+  },
+  "bank_details": {
+    "account_title": "",
+    "bank_name": "",
+    "bank_branch": "",
+    "bank_account_no": "",
+    "ifsc_code": "",
+    "payscale": "",
+    "basic_salary": "0",
+    "epf_no": "",
+    "contract_type": "",
+    "shift": "",
+    "location": ""
+  },
+  "social_media": {
+    "facebook": "",
+    "twitter": "",
+    "linkedin": "",
+    "instagram": ""
+  },
+  "documents": [],
+  "custom_fields": [],
+  "payroll_details": {
+    "payroll_records": [
+      {
+        "id": "28",
+        "staff_id": "6",
+        "basic": "10000.00",
+        "total_allowance": "0.00",
+        "total_deduction": "0.00",
+        "leave_deduction": "0",
+        "tax": "0",
+        "net_salary": "10000.00",
+        "status": "generated",
+        "month": "July",
+        "year": "2025",
+        "payment_mode": "",
+        "payment_date": "2025-08-24",
+        "remark": "",
+        "generated_by": null,
+        "created_at": "2025-08-24 11:47:18"
+      }
+    ],
+    "salary_summary": {
+      "net_salary": null,
+      "earnings": null,
+      "deduction": null,
+      "basic_salary": null,
+      "tax": null
+    }
+  },
+  "timeline": {
+    "timeline_events": [],
+    "total_events": 0
+  },
+  "leave_records": {
+    "leave_requests": [
+      {
+        "name": "MAHA LAKSHMI",
+        "surname": "SALLA",
+        "employee_id": "200226",
+        "id": "3",
+        "staff_id": "6",
+        "leave_type_id": "2",
+        "leave_from": "2023-09-01",
+        "leave_to": "2023-09-04",
+        "leave_days": "4",
+        "employee_remark": "werfghj",
+        "admin_remark": "sdfg",
+        "status": "disapproved",
+        "applied_by": "1",
+        "document_file": "",
+        "date": "2023-08-31",
+        "created_at": "2023-08-31 14:15:27",
+        "type": "Casual Leave"
+      }
+    ],
+    "leave_balance": [
+      {
+        "type": "Medical Leave",
+        "alloted_leave": "5",
+        "approve_leave": 0,
+        "remaining_leave": 5
+      },
+      {
+        "type": "Casual Leave",
+        "alloted_leave": "5",
+        "approve_leave": 0,
+        "remaining_leave": 5
+      }
+    ],
+    "total_requests": 1
+  },
+  "attendance_records": {
+    "attendance_summary": {
+      "Present": "0",
+      "Late": "0",
+      "Absent": "0",
+      "Half Day": "0",
+      "Holiday": "0"
+    },
+    "recent_attendance": [],
+    "attendance_types": [
+      {
+        "id": "1",
+        "type": "Present",
+        "key_value": "<b class=\"text text-success\">P</b>",
+        "is_active": "yes",
+        "created_at": "0000-00-00 00:00:00",
+        "updated_at": "0000-00-00"
+      },
+      {
+        "id": "2",
+        "type": "Late",
+        "key_value": "<b class=\"text text-warning\">L</b>",
+        "is_active": "yes",
+        "created_at": "0000-00-00 00:00:00",
+        "updated_at": "0000-00-00"
+      }
+    ]
+  },
+  "ratings_reviews": {
+    "average_rating": 0,
+    "total_reviews": "0",
+    "can_view_rating": false,
+    "reviews": []
+  },
+  "qr_code": {
+    "data": {
+      "type": "staff_profile",
+      "staff_id": "6",
+      "employee_id": "200226",
+      "name": "MAHA LAKSHMI SALLA",
+      "designation": "Accountant",
+      "department": "Finance",
+      "email": "mahalakshmisalla70@gmail.com",
+      "contact": "8328595488",
+      "profile_url": "https://school.cyberdetox.in/api/api/teacher/profile/6"
+    },
+    "qr_string": "{\"type\":\"staff_profile\",\"staff_id\":\"6\",\"employee_id\":\"200226\",\"name\":\"MAHA LAKSHMI SALLA\",\"designation\":\"Accountant\",\"department\":\"Finance\",\"email\":\"mahalakshmisalla70@gmail.com\",\"contact\":\"8328595488\",\"profile_url\":\"https:\\/\\/school.cyberdetox.in\\/api\\/api\\/teacher\\/profile\\/6\"}",
+    "qr_code_url": "https://school.cyberdetox.in/api/api/teacher/qr-code/6"
+  },
+  "profile_image": "https://school.cyberdetox.in/api/uploads/staff_images/1716194826-1802404949664b0e0aa5de2!WhatsApp Image 2024-05-20 at 2.16.50 PM.jpeg",
+  "school_settings": {
+    "staff_phone": 1,
+    "staff_emergency_contact": 1,
+    "staff_marital_status": 1,
+    "staff_father_name": 1,
+    "staff_mother_name": 1,
+    "staff_qualification": 1,
+    "staff_work_experience": 1,
+    "staff_note": 1,
+    "staff_current_address": 1,
+    "staff_permanent_address": 1,
+    "staff_account_details": 1,
+    "staff_social_media": 1,
+    "staff_upload_documents": 1,
+    "staff_barcode": 1
+  }
+}

@@ -1,0 +1,159 @@
+/* ========================================
+   RED THEME - HEADER COLOR OVERRIDES
+   ======================================== */
+:root {
+  /* Primary Colors */
+  --header-primary: #dd4b39;
+  --header-accent: #ff6b57;
+  --header-success: #00a65a;
+  --header-danger: #c0392b;
+  --header-warning: #f39c12;
+  
+  /* Header Specific */
+  --header-bg: #9a4f4f;
+  --header-border: rgba(255, 255, 255, 0.1);
+  --header-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+  
+  /* Text Colors */
+  --header-text-primary: #550505;
+  --header-text-secondary: #b86e6e;
+  --header-text-muted: #e8b8b8;
+  
+  /* Icon Colors */
+  --header-icon-color: #f5d5d5;
+  --header-icon-hover: #e37575;
+  --header-icon-bg-hover: rgba(255, 255, 255, 0.15);
+  
+  /* Search */
+  --search-bg: #f7f9fc;
+  --search-border: #e0e6ed;
+  --search-focus-bg: #ffffff;
+  --search-focus-border: #dd4b39;
+  --search-focus-shadow: rgba(221, 75, 57, 0.15);
+  
+  /* Dropdown */
+  --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --dropdown-border: #e0e6ed;
+  
+  /* Neutral Colors */
+  --neutral-100: #f7f9fc;
+  --neutral-200: #e0e6ed;
+  --neutral-300: #c5cdd8;
+  --neutral-600: #5a6c7d;
+  --neutral-900: #2c3e50;
+  
+  /* Sidebar Colors */
+  --sidebar-bg: rgb(154 79 79);
+  --sidebar-line-color: #f1b0b7;
+  --sidebar-line-active-color: #f1b0b7;
+  --sidebar-indicator-color: #f5d5d5;
+  --sidebar-sub-hover-bg: rgb(232 78 59 / 52%);
+  --sidebar-sub-active-bg: rgb(221 75 57 / 68%);
+  --sidebar-sub-text: #f5d5d5;
+  --sidebar-sub-active-text: #fffaf9;
+  --sidebar-indicator-active-color: #47ffd3;
+  --sidebar-sub-card-bg: rgb(204 126 126 / 60%);
+  /* Sidebar main item states */
+  --sidebar-main-hover-bg: linear-gradient(135deg, rgb(52 0 3 / 68%), rgb(166 123 123 / 90%));
+  --sidebar-main-active-bg: linear-gradient(135deg, rgb(226 180 166), rgb(221 100 100));
+}
+
+/* Override skin file hardcoded colors with CSS variables */
+.skin-blue .main-header .navbar {
+  background-color: var(--header-bg) !important;
+}
+
+.skin-blue .main-header .logo {
+  background-color: var(--header-bg) !important;
+}
+
+/* Force icon colors to use CSS variables */
+.skin-blue .main-header .navbar .nav > li > a {
+  color: var(--header-icon-color) !important;
+}
+
+.skin-blue .main-header .navbar .nav > li > a:hover {
+  color: var(--header-icon-hover) !important;
+}
+
+/* Title color override */
+.main-header .sidebar-session {
+  color: var(--header-text-primary) !important;
+}
+
+.dropdown-menu {background: #f5f7f8;}
+.box.box-primary{border-top-color:#a9101a;box-shadow: 0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-info{border-top-color:#a80f1b;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-danger{border-top-color:#dd4b39;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}
+.box.box-warning{border-top-color:#af0105;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-success{border-top-color: #a9101a;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-default{border-top-color:#d2d6de;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.collapsed-box .box-body,.box.collapsed-box .box-footer{display:none}.box .nav-stacked>li{border-bottom:1px solid #f4f4f4;margin:0}.box .nav-stacked>li:last-of-type{border-bottom:none}.box.height-control .box-body{max-height:300px;overflow:auto}.box .border-right{border-right:1px solid #f4f4f4}
+
+.nav-tabs-custom>.nav-tabs>li.active{border-top-color: #a80f1b;}
+.btn-primary{background-color: #bb121d;border-color: #880610;transition: .3s;}
+.btn-primary:hover,.btn-primary:active,.btn-primary.hover{background-color: #880610;}
+.btn-success{background-color:#00a65a;border-color:#232323}.btn-success:hover,.btn-success:active,.btn-success.hover{background-color:#070707}
+.btn-info{background-color: #bb121d;border-color: #880610;}
+.btn-info:hover,.btn-info:active,.btn-info.hover{background-color: #880610;}
+.btn-danger{background-color:#dd4b39;border-color:#d73925}
+
+.sidebar-menu{font-family:'Roboto-Bold';}
+.sessionul{font-family:'Roboto-Bold';}
+/*begin 13 may*/
+.slimScrollBar{background: #3b495e !important;} 
+/*end 13 may*/
+
+.removehover{color: #333 !important}
+.removehover:hover{color: #333 !important}
+.modal-header {background: linear-gradient(40deg,#c6212d,#720127); color: #fff;}
+
+/*.white-td .printDoc{margin-right: -5px;
+   border-radius: 3px 0px 0px 3px !important;
+}*/
+
+/*.close:focus, .close:hover {color: #3b495e; outline: none;}*/
+
+/*19 august*/
+.selector-list li:hover{background:#3b495e;}
+
+/*end 19 August*/
+
+/*9 september*/
+
+.chosebtn:hover{background: #012e48 !important;}
+.chosebtn{
+background: #a9101a !important; border-radius: 0px 3px 3px 0px;
+border: 1px solid #03324e;color:#fff; 
+}
+.pagetitleh {
+  background: #a80f1b;
+
+}
+
+
+
+
+.chosebtn:hover{background: #880610;color:#fff;border-color: #bb121d;}
+.chosebtn{
+   
+    background: #bb121d;
+   
+    border: 1px solid #880610;
+
+    } 
+
+ .anchorbtn{background: transparent !important; border:0 !important; color: #0084B4 !important; font-size: 16px;box-shadow: none !important; } 
+ .anchorbtn:focus,
+  .anchorbtn:hover{outline:0 !important;background: transparent !important; border:0 !important; 
+    color: #000 !important; text-decoration: none;}
+.fixedmenu
+{
+  background: var(--sidebar-bg) !important;
+}
+/*end 19 August*/
+
+#nprogress .bar {background:#4caf50 !important;}
+#nprogress .spinner-icon {
+  border-top-color: #4caf50 !important;
+  border-left-color: #4caf50 !important;
+
+}
+
+.classlist li a:hover {color: #ece9e9;}
+.classlist li a {color: #fff;text-decoration: none;}

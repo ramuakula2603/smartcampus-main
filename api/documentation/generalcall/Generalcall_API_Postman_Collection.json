@@ -1,0 +1,180 @@
+{
+	"info": {
+		"_postman_id": "7f8e42d3-5b9c-4f7d-a9e5-3b9d7c2e1f4d",
+		"name": "General Call API Tests",
+		"description": "Collection for testing the General Call API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List All General Calls",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Client-Service",
+						"value": "smartschool",
+						"type": "text"
+					},
+					{
+						"key": "Auth-Key",
+						"value": "schoolAdmin@",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/generalcall_api",
+					"host": ["{{base_url}}"],
+					"path": ["api", "generalcall_api"]
+				}
+			}
+		},
+		{
+			"name": "Get Single General Call",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Client-Service",
+						"value": "smartschool",
+						"type": "text"
+					},
+					{
+						"key": "Auth-Key",
+						"value": "schoolAdmin@",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/generalcall_api/detail/1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "generalcall_api", "detail", "1"]
+				}
+			}
+		},
+		{
+			"name": "Add New General Call",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Client-Service",
+						"value": "smartschool",
+						"type": "text"
+					},
+					{
+						"key": "Auth-Key",
+						"value": "schoolAdmin@",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"John Doe\",\n    \"contact\": \"1234567890\",\n    \"date\": \"2025-11-07\",\n    \"description\": \"Enquiry about admission\",\n    \"call_duration\": \"10 minutes\",\n    \"note\": \"Interested in Grade 5 admission\",\n    \"follow_up_date\": \"2025-11-10\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/generalcall_api/add",
+					"host": ["{{base_url}}"],
+					"path": ["api", "generalcall_api", "add"]
+				}
+			}
+		},
+		{
+			"name": "Update General Call",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Client-Service",
+						"value": "smartschool",
+						"type": "text"
+					},
+					{
+						"key": "Auth-Key",
+						"value": "schoolAdmin@",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"John Doe\",\n    \"contact\": \"1234567890\",\n    \"date\": \"2025-11-07\",\n    \"description\": \"Updated enquiry details\",\n    \"call_duration\": \"15 minutes\",\n    \"note\": \"Updated notes\",\n    \"follow_up_date\": \"2025-11-12\"\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/api/generalcall_api/update/1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "generalcall_api", "update", "1"]
+				}
+			}
+		},
+		{
+			"name": "Delete General Call",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Client-Service",
+						"value": "smartschool",
+						"type": "text"
+					},
+					{
+						"key": "Auth-Key",
+						"value": "schoolAdmin@",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{auth_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/generalcall_api/delete/1",
+					"host": ["{{base_url}}"],
+					"path": ["api", "generalcall_api", "delete", "1"]
+				}
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost/amt",
+			"type": "string"
+		},
+		{
+			"key": "auth_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

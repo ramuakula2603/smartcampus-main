@@ -1,0 +1,404 @@
+{
+  "info": {
+    "_postman_id": "class-sections-api-collection",
+    "name": "Class Sections API",
+    "description": "Complete API collection for testing Class Sections endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. List All Class-Section Links",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/list",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "list"]
+        },
+        "description": "Retrieve all class-section links with complete details"
+      }
+    },
+    {
+      "name": "2. List Classes",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/classes/list",
+          "host": ["{{base_url}}"],
+          "path": ["classes", "list"]
+        },
+        "description": "Get list of all classes (note a class_id for linking)"
+      }
+    },
+    {
+      "name": "3. List Sections",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/sections/list",
+          "host": ["{{base_url}}"],
+          "path": ["sections", "list"]
+        },
+        "description": "Get list of all sections (note a section_id for linking)"
+      }
+    },
+    {
+      "name": "4. Link Class to Section",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"class_id\": 10,\n  \"section_id\": 5,\n  \"is_active\": \"yes\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/link",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "link"]
+        },
+        "description": "Create a new class-section link. Replace class_id and section_id with values from steps 2 and 3"
+      }
+    },
+    {
+      "name": "5. Get Specific Link",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/get/99",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "get", "99"]
+        },
+        "description": "Get details of a specific class-section link. Replace 99 with the link_id from step 4"
+      }
+    },
+    {
+      "name": "6. Error - Invalid Class ID",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"class_id\": 99999,\n  \"section_id\": 5,\n  \"is_active\": \"yes\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/link",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "link"]
+        },
+        "description": "Test error handling - should return 404 Not Found"
+      }
+    },
+    {
+      "name": "7. Error - Invalid Section ID",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"class_id\": 10,\n  \"section_id\": 99999,\n  \"is_active\": \"yes\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/link",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "link"]
+        },
+        "description": "Test error handling - should return 404 Not Found"
+      }
+    },
+    {
+      "name": "8. Error - Missing Required Field",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"class_id\": 10\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/link",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "link"]
+        },
+        "description": "Test error handling - should return 400 Bad Request"
+      }
+    },
+    {
+      "name": "9. Error - Duplicate Link",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"class_id\": 10,\n  \"section_id\": 5,\n  \"is_active\": \"yes\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/link",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "link"]
+        },
+        "description": "Test error handling - should return 409 Conflict (link already exists)"
+      }
+    },
+    {
+      "name": "10. Unlink Class from Section",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/unlink/99",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "unlink", "99"]
+        },
+        "description": "Remove a class-section link. Replace 99 with the link_id from step 4"
+      }
+    },
+    {
+      "name": "11. Error - Invalid Link ID",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/get/99999",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "get", "99999"]
+        },
+        "description": "Test error handling - should return 404 Not Found"
+      }
+    },
+    {
+      "name": "12. Error - Invalid Headers",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "wrongservice"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "wrongkey"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{}"
+        },
+        "url": {
+          "raw": "{{base_url}}/class-sections/list",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "list"]
+        },
+        "description": "Test error handling - should return 401 Unauthorized"
+      }
+    },
+    {
+      "name": "13. Error - Wrong HTTP Method",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Client-Service",
+            "value": "smartschool"
+          },
+          {
+            "key": "Auth-Key",
+            "value": "schoolAdmin@"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/class-sections/list",
+          "host": ["{{base_url}}"],
+          "path": ["class-sections", "list"]
+        },
+        "description": "Test error handling - should return 405 Method Not Allowed"
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost/amt/api",
+      "type": "string"
+    }
+  ]
+}
+

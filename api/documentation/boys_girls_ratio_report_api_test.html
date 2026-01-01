@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boys Girls Ratio Report API - Interactive Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 30px;
+        }
+        .section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #e0e0e0;
+        }
+        .section h2 {
+            color: #f5576c;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #f5576c;
+            padding-bottom: 10px;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 8px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+        .test-button:active {
+            transform: translateY(0);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-weight: 600;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+        .form-group textarea {
+            min-height: 120px;
+            font-family: 'Courier New', monospace;
+        }
+        .execute-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        .execute-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        .response-section {
+            grid-column: 1 / -1;
+        }
+        .response-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 600px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #f5576c;
+            font-weight: 600;
+        }
+        .info-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        .info-box strong {
+            color: #856404;
+        }
+        @media (max-width: 968px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Boys Girls Ratio Report API</h1>
+            <p>Interactive Testing Interface - Gender Statistics & Ratios</p>
+        </div>
+
+        <div class="content">
+            <!-- Pre-configured Tests -->
+            <div class="section">
+                <h2>📋 Pre-configured Tests</h2>
+                <div class="info-box">
+                    <strong>Note:</strong> Click any button below to execute a pre-configured test scenario
+                </div>
+                
+                <button class="test-button" onclick="runTest1()">Test 1: All Classes & Sections</button>
+                <button class="test-button" onclick="runTest2()">Test 2: Filter by Class 1</button>
+                <button class="test-button" onclick="runTest3()">Test 3: Filter by Section 1</button>
+                <button class="test-button" onclick="runTest4()">Test 4: Class 1 + Section 1</button>
+                <button class="test-button" onclick="runTest5()">Test 5: Multiple Classes [1,2,3]</button>
+                <button class="test-button" onclick="runTest6()">Test 6: Multiple Sections [1,2]</button>
+                <button class="test-button" onclick="runTest7()">Test 7: Null Values (All Data)</button>
+                <button class="test-button" onclick="runTest8()">Test 8: Empty Arrays (All Data)</button>
+                <button class="test-button" onclick="runTest9()">Test 9: List All Endpoint</button>
+                <button class="test-button" onclick="runTest10()">Test 10: Custom Session ID</button>
+                <button class="test-button" onclick="runTest11()">Test 11: Class 2 + Multiple Sections</button>
+                <button class="test-button" onclick="runTest12()">Test 12: Multiple Classes + Section 1</button>
+            </div>
+
+            <!-- Custom Request Builder -->
+            <div class="section">
+                <h2>🛠️ Custom Request Builder</h2>
+                
+                <div class="form-group">
+                    <label>API Endpoint:</label>
+                    <input type="text" id="endpoint" value="http://localhost/amt/api/boys-girls-ratio-report/filter">
+                </div>
+
+                <div class="form-group">
+                    <label>Request Body (JSON):</label>
+                    <textarea id="requestBody">{}</textarea>
+                </div>
+
+                <button class="execute-btn" onclick="executeCustomRequest()">🚀 Execute Custom Request</button>
+            </div>
+
+            <!-- Response Display -->
+            <div class="section response-section">
+                <h2>📊 Response</h2>
+                <div id="responseContainer">
+                    <div class="info-box">
+                        <strong>Ready!</strong> Click any test button above to see the API response here.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost/amt/api/boys-girls-ratio-report';
+        const HEADERS = {
+            'Content-Type': 'application/json',
+            'Client-Service': 'smartschool',
+            'Auth-Key': 'schoolAdmin@'
+        };
+
+        async function makeRequest(endpoint, body) {
+            const container = document.getElementById('responseContainer');
+            container.innerHTML = '<div class="loading">⏳ Loading...</div>';
+
+            try {
+                const startTime = performance.now();
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: HEADERS,
+                    body: JSON.stringify(body)
+                });
+                const endTime = performance.now();
+                const data = await response.json();
+                
+                const statusClass = response.ok ? 'status-success' : 'status-error';
+                const statusText = response.ok ? '✅ Success' : '❌ Error';
+                const responseTime = (endTime - startTime).toFixed(2);
+
+                let summaryBadges = '';
+                if (data.summary) {
+                    summaryBadges = `
+                        <div class="status-badge status-info">👥 ${data.summary.total_students} students</div>
+                        <div class="status-badge status-info">👦 ${data.summary.total_boys} boys</div>
+                        <div class="status-badge status-info">👧 ${data.summary.total_girls} girls</div>
+                        <div class="status-badge status-info">📊 Ratio: ${data.summary.boys_girls_ratio}</div>
+                    `;
+                }
+
+                container.innerHTML = `
+                    <div class="status-badge ${statusClass}">${statusText}</div>
+                    <div class="status-badge status-success">⏱️ ${responseTime}ms</div>
+                    <div class="status-badge status-success">📋 ${data.total_records || 0} records</div>
+                    ${summaryBadges}
+                    <div class="response-box">${JSON.stringify(data, null, 2)}</div>
+                `;
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="status-badge status-error">❌ Network Error</div>
+                    <div class="response-box">Error: ${error.message}</div>
+                `;
+            }
+        }
+
+        function runTest1() {
+            makeRequest(`${API_BASE}/filter`, {});
+        }
+
+        function runTest2() {
+            makeRequest(`${API_BASE}/filter`, { class_id: 1 });
+        }
+
+        function runTest3() {
+            makeRequest(`${API_BASE}/filter`, { section_id: 1 });
+        }
+
+        function runTest4() {
+            makeRequest(`${API_BASE}/filter`, { class_id: 1, section_id: 1 });
+        }
+
+        function runTest5() {
+            makeRequest(`${API_BASE}/filter`, { class_id: [1, 2, 3] });
+        }
+
+        function runTest6() {
+            makeRequest(`${API_BASE}/filter`, { section_id: [1, 2] });
+        }
+
+        function runTest7() {
+            makeRequest(`${API_BASE}/filter`, { class_id: null, section_id: null });
+        }
+
+        function runTest8() {
+            makeRequest(`${API_BASE}/filter`, { class_id: [], section_id: [] });
+        }
+
+        function runTest9() {
+            makeRequest(`${API_BASE}/list`, {});
+        }
+
+        function runTest10() {
+            makeRequest(`${API_BASE}/filter`, { class_id: 1, session_id: 18 });
+        }
+
+        function runTest11() {
+            makeRequest(`${API_BASE}/filter`, { class_id: 2, section_id: [1, 2] });
+        }
+
+        function runTest12() {
+            makeRequest(`${API_BASE}/filter`, { class_id: [1, 2], section_id: 1 });
+        }
+
+        function executeCustomRequest() {
+            const endpoint = document.getElementById('endpoint').value;
+            const bodyText = document.getElementById('requestBody').value;
+            
+            try {
+                const body = JSON.parse(bodyText);
+                makeRequest(endpoint, body);
+            } catch (error) {
+                document.getElementById('responseContainer').innerHTML = `
+                    <div class="status-badge status-error">❌ Invalid JSON</div>
+                    <div class="response-box">Error: ${error.message}\n\nPlease check your JSON syntax.</div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
+

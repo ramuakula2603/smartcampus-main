@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Report API Tester</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+        
+        .response-container {
+            margin-top: 20px;
+        }
+        
+        .response-box {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .response-box pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+        
+        .success {
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .error {
+            border-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .info-box h3 {
+            color: #2196F3;
+            margin-bottom: 10px;
+        }
+        
+        .test-scenarios {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .scenario-btn {
+            padding: 15px;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+        
+        .scenario-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎓 Student Report API Tester</h1>
+            <p>Test the Student Report API endpoints with various scenarios</p>
+        </div>
+        
+        <div class="content">
+            <!-- API Configuration -->
+            <div class="section">
+                <h2>API Configuration</h2>
+                <div class="form-group">
+                    <label for="apiUrl">API Base URL:</label>
+                    <input type="text" id="apiUrl" value="http://localhost/amt/api/student-report" placeholder="http://localhost/amt/api/student-report">
+                </div>
+            </div>
+            
+            <!-- Quick Test Scenarios -->
+            <div class="section">
+                <h2>Quick Test Scenarios</h2>
+                <div class="info-box">
+                    <h3>ℹ️ About These Tests</h3>
+                    <p>Click any scenario below to quickly test different filtering options. All scenarios use the same authentication headers.</p>
+                </div>
+                <div class="test-scenarios">
+                    <button class="scenario-btn" onclick="testScenario('all')">
+                        <strong>All Students</strong><br>
+                        <small>No filters applied</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('single-class')">
+                        <strong>Single Class</strong><br>
+                        <small>Filter by class_id: 1</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('multiple-classes')">
+                        <strong>Multiple Classes</strong><br>
+                        <small>Filter by class_id: [1,2,3]</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('class-section')">
+                        <strong>Class & Section</strong><br>
+                        <small>class_id: 1, section_id: 2</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('with-category')">
+                        <strong>With Category</strong><br>
+                        <small>class_id: 1, category_id: 3</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('null-filters')">
+                        <strong>Null Filters</strong><br>
+                        <small>Test graceful handling</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('list')">
+                        <strong>List Endpoint</strong><br>
+                        <small>Use /list endpoint</small>
+                    </button>
+                    <button class="scenario-btn" onclick="testScenario('complex')">
+                        <strong>Complex Filter</strong><br>
+                        <small>Multiple filters combined</small>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Custom Request -->
+            <div class="section">
+                <h2>Custom Request</h2>
+                <div class="form-group">
+                    <label for="endpoint">Endpoint:</label>
+                    <select id="endpoint">
+                        <option value="filter">filter</option>
+                        <option value="list">list</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="requestBody">Request Body (JSON):</label>
+                    <textarea id="requestBody" rows="8" placeholder='{"class_id": 1, "section_id": 2}'>{}</textarea>
+                </div>
+                <div class="button-group">
+                    <button class="btn-primary" onclick="sendCustomRequest()">Send Request</button>
+                    <button class="btn-secondary" onclick="clearResponse()">Clear Response</button>
+                </div>
+            </div>
+            
+            <!-- Response -->
+            <div class="section">
+                <h2>Response</h2>
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Loading...</p>
+                </div>
+                <div class="response-container">
+                    <div class="response-box" id="responseBox">
+                        <pre id="response">Response will appear here...</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const scenarios = {
+            'all': {
+                endpoint: 'filter',
+                body: {}
+            },
+            'single-class': {
+                endpoint: 'filter',
+                body: { class_id: 1 }
+            },
+            'multiple-classes': {
+                endpoint: 'filter',
+                body: { class_id: [1, 2, 3] }
+            },
+            'class-section': {
+                endpoint: 'filter',
+                body: { class_id: 1, section_id: 2 }
+            },
+            'with-category': {
+                endpoint: 'filter',
+                body: { class_id: 1, category_id: 3 }
+            },
+            'null-filters': {
+                endpoint: 'filter',
+                body: { class_id: null, section_id: null, category_id: null }
+            },
+            'list': {
+                endpoint: 'list',
+                body: {}
+            },
+            'complex': {
+                endpoint: 'filter',
+                body: { 
+                    class_id: [1, 2], 
+                    section_id: [1, 2], 
+                    category_id: 3,
+                    session_id: 18
+                }
+            }
+        };
+        
+        function testScenario(scenarioName) {
+            const scenario = scenarios[scenarioName];
+            document.getElementById('endpoint').value = scenario.endpoint;
+            document.getElementById('requestBody').value = JSON.stringify(scenario.body, null, 2);
+            sendCustomRequest();
+        }
+        
+        async function sendCustomRequest() {
+            const apiUrl = document.getElementById('apiUrl').value;
+            const endpoint = document.getElementById('endpoint').value;
+            const requestBody = document.getElementById('requestBody').value;
+            
+            const loading = document.getElementById('loading');
+            const responseBox = document.getElementById('responseBox');
+            const responseElement = document.getElementById('response');
+            
+            // Show loading
+            loading.style.display = 'block';
+            responseBox.className = 'response-box';
+            
+            try {
+                // Parse request body
+                let body = {};
+                if (requestBody.trim()) {
+                    body = JSON.parse(requestBody);
+                }
+                
+                // Make API call
+                const response = await fetch(`${apiUrl}/${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Client-Service': 'smartschool',
+                        'Auth-Key': 'schoolAdmin@'
+                    },
+                    body: JSON.stringify(body)
+                });
+                
+                const data = await response.json();
+                
+                // Display response
+                responseElement.textContent = JSON.stringify(data, null, 2);
+                
+                // Set response box class based on status
+                if (response.ok && data.status === 1) {
+                    responseBox.className = 'response-box success';
+                } else {
+                    responseBox.className = 'response-box error';
+                }
+                
+            } catch (error) {
+                responseElement.textContent = `Error: ${error.message}\n\nPlease check:\n1. API URL is correct\n2. Server is running\n3. Request body is valid JSON`;
+                responseBox.className = 'response-box error';
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+        
+        function clearResponse() {
+            document.getElementById('response').textContent = 'Response will appear here...';
+            document.getElementById('responseBox').className = 'response-box';
+        }
+    </script>
+</body>
+</html>
+

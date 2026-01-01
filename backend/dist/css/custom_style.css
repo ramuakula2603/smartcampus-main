@@ -1,0 +1,13 @@
+.box_dashboard{
+	display: block;
+    font-size: 15px;
+    margin-top: 38px;
+    white-space: nowrap;
+    margin-left: 19px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.SumoSelect .select-all {
+    padding: 0px 8px !important;
+}

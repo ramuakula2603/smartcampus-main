@@ -1,0 +1,209 @@
+{
+  "info": {
+    "name": "Student Admission API",
+    "description": "API collection for Student Management System - Student Admission Endpoint",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Student - Minimal Required Fields",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"Male\",\n  \"dob\": \"2010-01-15\",\n  \"class_id\": 1,\n  \"section_id\": 1,\n  \"reference_id\": 1,\n  \"guardian_name\": \"Jane Doe\",\n  \"guardian_is\": \"Mother\",\n  \"guardian_phone\": \"9876543210\",\n  \"guardian_email\": \"jane.doe@example.com\",\n  \"email\": \"john.doe@example.com\",\n  \"mobileno\": \"9123456789\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/amt/api/student_admission_api/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "amt",
+            "api",
+            "student_admission_api",
+            "create"
+          ]
+        },
+        "description": "Creates a new student with only the required fields. This is the minimal data needed to create a student record."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student - Complete Data",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"John\",\n  \"middlename\": \"Michael\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"Male\",\n  \"dob\": \"2010-01-15\",\n  \"class_id\": 1,\n  \"section_id\": 1,\n  \"reference_id\": 1,\n  \"guardian_name\": \"Jane Doe\",\n  \"guardian_is\": \"Mother\",\n  \"guardian_phone\": \"9876543210\",\n  \"guardian_email\": \"jane.doe@example.com\",\n  \"guardian_relation\": \"Mother\",\n  \"guardian_occupation\": \"Teacher\",\n  \"guardian_address\": \"123 Main Street, City\",\n  \"email\": \"john.doe@example.com\",\n  \"mobileno\": \"9123456789\",\n  \"blood_group\": \"O+\",\n  \"religion\": \"Hindu\",\n  \"cast\": \"General\",\n  \"category_id\": 1,\n  \"current_address\": \"123 Main Street, City\",\n  \"permanent_address\": \"123 Main Street, City\",\n  \"father_name\": \"Robert Doe\",\n  \"father_phone\": \"9876543211\",\n  \"father_occupation\": \"Engineer\",\n  \"mother_name\": \"Jane Doe\",\n  \"mother_phone\": \"9876543210\",\n  \"mother_occupation\": \"Teacher\",\n  \"admission_date\": \"2024-04-01\",\n  \"admi_no\": \"ADM2024001\",\n  \"state\": \"Maharashtra\",\n  \"city\": \"Mumbai\",\n  \"pincode\": \"400001\",\n  \"height\": \"150\",\n  \"weight\": \"45\",\n  \"adhar_no\": \"123456789012\",\n  \"samagra_id\": \"SAM123456\",\n  \"bank_account_no\": \"1234567890\",\n  \"bank_name\": \"State Bank\",\n  \"ifsc_code\": \"SBIN0001234\",\n  \"note\": \"New admission for academic year 2024-25\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/amt/api/student_admission_api/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "amt",
+            "api",
+            "student_admission_api",
+            "create"
+          ]
+        },
+        "description": "Creates a new student with all available fields populated. This demonstrates the complete data structure."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student - With Sibling",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"Female\",\n  \"dob\": \"2012-05-20\",\n  \"class_id\": 1,\n  \"section_id\": 1,\n  \"reference_id\": 1,\n  \"guardian_name\": \"Jane Doe\",\n  \"guardian_is\": \"Mother\",\n  \"guardian_phone\": \"9876543210\",\n  \"email\": \"jane.doe.student@example.com\",\n  \"mobileno\": \"9123456788\",\n  \"sibling_id\": 123\n}"
+        },
+        "url": {
+          "raw": "http://localhost/amt/api/student_admission_api/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "amt",
+            "api",
+            "student_admission_api",
+            "create"
+          ]
+        },
+        "description": "Creates a new student linked to an existing sibling. Replace 'sibling_id' with an actual student ID. When sibling_id is provided, the new student will share the same parent account."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student - With Transport",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"Transport\",\n  \"lastname\": \"Student\",\n  \"gender\": \"Male\",\n  \"dob\": \"2010-01-15\",\n  \"class_id\": 1,\n  \"section_id\": 1,\n  \"reference_id\": 1,\n  \"guardian_name\": \"Guardian Name\",\n  \"guardian_is\": \"Father\",\n  \"guardian_phone\": \"9876543210\",\n  \"guardian_email\": \"transport.guardian@example.com\",\n  \"email\": \"transport.student@example.com\",\n  \"mobileno\": \"9123456789\",\n  \"vehroute_id\": 1,\n  \"route_pickup_point_id\": 1,\n  \"transport_feemaster_id\": [1, 2, 3]\n}"
+        },
+        "url": {
+          "raw": "http://localhost/amt/api/student_admission_api/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "amt",
+            "api",
+            "student_admission_api",
+            "create"
+          ]
+        },
+        "description": "Creates a new student with transport facility. Includes vehicle route, pickup point, and transport fee assignments."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student - With Fees",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"Fee\",\n  \"lastname\": \"Student\",\n  \"gender\": \"Female\",\n  \"dob\": \"2010-01-15\",\n  \"class_id\": 1,\n  \"section_id\": 1,\n  \"reference_id\": 1,\n  \"guardian_name\": \"Guardian Name\",\n  \"guardian_is\": \"Mother\",\n  \"guardian_phone\": \"9876543210\",\n  \"guardian_email\": \"fee.guardian@example.com\",\n  \"email\": \"fee.student@example.com\",\n  \"mobileno\": \"9123456789\",\n  \"fee_session_group_id\": 1,\n  \"fees_discount\": 500.00,\n  \"hostel_room_id\": 1\n}"
+        },
+        "url": {
+          "raw": "http://localhost/amt/api/student_admission_api/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "amt",
+            "api",
+            "student_admission_api",
+            "create"
+          ]
+        },
+        "description": "Creates a new student with fee group assignment, fee discount, and hostel room assignment."
+      },
+      "response": []
+    },
+    {
+      "name": "Create Student - Validation Test (Invalid Data)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstname\": \"\",\n  \"gender\": \"Invalid\",\n  \"dob\": \"invalid-date\",\n  \"email\": \"invalid-email\",\n  \"mobileno\": \"123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost/amt/api/student_admission_api/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "path": [
+            "amt",
+            "api",
+            "student_admission_api",
+            "create"
+          ]
+        },
+        "description": "Tests validation by sending invalid data. This should return a 400 error with detailed validation messages."
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost/amt/api",
+      "type": "string"
+    }
+  ]
+}
+

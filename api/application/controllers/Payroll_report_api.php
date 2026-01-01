@@ -1,0 +1,264 @@
+<?php
+
+defined('BASEPATH') or exit('No direct script access allowed');
+
+/**
+ * Payroll Report API Controller
+ *
+ * Provides API endpoints for payroll reports
+ *
+ * @package    Smart School
+ * @subpackage API
+ * @category   Finance Reports
+ * @author     Smart School Team
+ */
+class Payroll_report_api extends CI_Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Suppress errors for clean JSON output
+        ini_set('display_errors', 0);
+        error_reporting(0);
+
+        // Load required models in correct order
+        $this->load->model('setting_model');
+        $this->load->model('auth_model');
+        $this->load->model('payroll_model');
+        $this->load->model('staff_model');
+
+        // Set JSON response header
+        header('Content-Type: application/json');
+    }
+
+    /**
+     * Filter endpoint - Get payroll report with filters
+     *
+     * POST /api/payroll-report/filter
+     *
+     * Request Body (all optional):
+     * {
+     *   "search_type": "today|this_week|this_month|last_month|this_year|period",
+     *   "date_from": "2025-01-01",
+     *   "date_to": "2025-12-31"
+     * }
+     *
+     * Empty request {} returns all payroll for current year
+     */
+    public function filter()
+    {
+        try {
+            // Authenticate request
+            if (!$this->auth_model->check_auth_client()) {
+                echo json_encode(array(
+                    'status' => 0,
+                    'message' => 'Unauthorized access',
+                    'timestamp' => date('Y-m-d H:i:s')
+                ));
+                return;
+            }
+
+            // Get input
+            $input = json_decode(file_get_contents('php://input'), true);
+            if ($input === null) {
+                $input = array();
+            }
+
+            // Extract parameters with graceful null handling
+            $search_type = (isset($input['search_type']) && $input['search_type'] !== '') ? $input['search_type'] : null;
+            $date_from = (isset($input['date_from']) && $input['date_from'] !== '') ? $input['date_from'] : null;
+            $date_to = (isset($input['date_to']) && $input['date_to'] !== '') ? $input['date_to'] : null;
+
+            // Determine date range
+            if ($search_type !== null) {
+                // Use search_type to determine dates
+                $dates = $this->getDateRangeBySearchType($search_type);
+                $start_date = $dates['from_date'];
+                $end_date = $dates['to_date'];
+                $date_label = $dates['label'];
+            } elseif ($date_from !== null && $date_to !== null) {
+                // Use custom date range
+                $start_date = $date_from;
+                $end_date = $date_to;
+                $date_label = date('d/m/Y', strtotime($start_date)) . ' to ' . date('d/m/Y', strtotime($end_date));
+            } else {
+                // Default to current year
+                $dates = $this->getDateRangeBySearchType('this_year');
+                $start_date = $dates['from_date'];
+                $end_date = $dates['to_date'];
+                $date_label = $dates['label'];
+            }
+
+            // Get payroll data
+            $payrolls = $this->payroll_model->getbetweenpayrollReport($start_date, $end_date);
+
+            // Calculate totals
+            $total_basic = 0;
+            $total_allowance = 0;
+            $total_deduction = 0;
+            $total_tax = 0;
+            $total_net_salary = 0;
+            $total_records = count($payrolls);
+
+            foreach ($payrolls as &$payroll) {
+                $basic = floatval($payroll['basic']);
+                $allowance = floatval($payroll['total_allowance']);
+                $deduction = floatval($payroll['total_deduction']);
+                $tax = floatval($payroll['tax']);
+
+                $gross_salary = $basic + $allowance - $deduction;
+                $net_salary = $gross_salary - $tax;
+
+                $payroll['gross_salary'] = number_format($gross_salary, 2, '.', '');
+                $payroll['net_salary'] = number_format($net_salary, 2, '.', '');
+
+                $total_basic += $basic;
+                $total_allowance += $allowance;
+                $total_deduction += $deduction;
+                $total_tax += $tax;
+                $total_net_salary += $net_salary;
+            }
+
+            $total_gross_salary = $total_basic + $total_allowance - $total_deduction;
+
+            // Prepare response
+            $response = array(
+                'status' => 1,
+                'message' => 'Payroll report retrieved successfully',
+                'filters_applied' => array(
+                    'search_type' => $search_type,
+                    'date_from' => $start_date,
+                    'date_to' => $end_date
+                ),
+                'date_range' => array(
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                    'label' => $date_label
+                ),
+                'summary' => array(
+                    'total_records' => $total_records,
+                    'total_basic' => number_format($total_basic, 2, '.', ''),
+                    'total_allowance' => number_format($total_allowance, 2, '.', ''),
+                    'total_deduction' => number_format($total_deduction, 2, '.', ''),
+                    'total_gross_salary' => number_format($total_gross_salary, 2, '.', ''),
+                    'total_tax' => number_format($total_tax, 2, '.', ''),
+                    'total_net_salary' => number_format($total_net_salary, 2, '.', '')
+                ),
+                'total_records' => $total_records,
+                'data' => $payrolls,
+                'timestamp' => date('Y-m-d H:i:s')
+            );
+
+            echo json_encode($response);
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 0,
+                'message' => 'An error occurred while processing the request',
+                'error' => $e->getMessage(),
+                'timestamp' => date('Y-m-d H:i:s')
+            ));
+        }
+    }
+
+    /**
+     * List endpoint - Get filter options
+     *
+     * POST /api/payroll-report/list
+     *
+     * Returns available search types for filtering
+     */
+    public function list()
+    {
+        try {
+            // Authenticate request
+            if (!$this->auth_model->check_auth_client()) {
+                echo json_encode(array(
+                    'status' => 0,
+                    'message' => 'Unauthorized access',
+                    'timestamp' => date('Y-m-d H:i:s')
+                ));
+                return;
+            }
+
+            // Prepare response
+            $response = array(
+                'status' => 1,
+                'message' => 'Filter options retrieved successfully',
+                'data' => array(
+                    'search_types' => array(
+                        array('key' => 'today', 'label' => 'Today'),
+                        array('key' => 'this_week', 'label' => 'This Week'),
+                        array('key' => 'this_month', 'label' => 'This Month'),
+                        array('key' => 'last_month', 'label' => 'Last Month'),
+                        array('key' => 'this_year', 'label' => 'This Year'),
+                        array('key' => 'period', 'label' => 'Custom Period')
+                    )
+                ),
+                'timestamp' => date('Y-m-d H:i:s')
+            );
+
+            echo json_encode($response);
+
+        } catch (Exception $e) {
+            echo json_encode(array(
+                'status' => 0,
+                'message' => 'An error occurred while processing the request',
+                'error' => $e->getMessage(),
+                'timestamp' => date('Y-m-d H:i:s')
+            ));
+        }
+    }
+
+    /**
+     * Get date range by search type
+     * 
+     * @param string $search_type
+     * @return array
+     */
+    private function getDateRangeBySearchType($search_type)
+    {
+        $current_year = date('Y');
+        $current_month = date('m');
+        $current_day = date('d');
+
+        switch ($search_type) {
+            case 'today':
+                $from_date = date('Y-m-d');
+                $to_date = date('Y-m-d');
+                $label = date('d/m/Y');
+                break;
+            case 'this_week':
+                $from_date = date('Y-m-d', strtotime('monday this week'));
+                $to_date = date('Y-m-d', strtotime('sunday this week'));
+                $label = date('d/m/Y', strtotime($from_date)) . ' to ' . date('d/m/Y', strtotime($to_date));
+                break;
+            case 'this_month':
+                $from_date = date('Y-m-01');
+                $to_date = date('Y-m-t');
+                $label = date('F Y');
+                break;
+            case 'last_month':
+                $from_date = date('Y-m-01', strtotime('first day of last month'));
+                $to_date = date('Y-m-t', strtotime('last day of last month'));
+                $label = date('F Y', strtotime($from_date));
+                break;
+            case 'this_year':
+            default:
+                $from_date = $current_year . '-01-01';
+                $to_date = $current_year . '-12-31';
+                $label = '01/01/' . $current_year . ' to 31/12/' . $current_year;
+                break;
+        }
+
+        return array(
+            'from_date' => $from_date,
+            'to_date' => $to_date,
+            'label' => $label
+        );
+    }
+
+}
+

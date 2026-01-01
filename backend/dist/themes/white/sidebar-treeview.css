@@ -1,0 +1,646 @@
+/* ========================================
+   AMT White Theme - Sidebar Treeview Lines
+   Connecting lines for treeview menu items
+   ======================================== */
+
+/* Treeview container setup */
+.sidebar-menu > li.treeview {
+    position: relative;
+}
+
+/* Make the label span take remaining space and avoid overlapping the indicator */
+.sidebar-menu > li > a > span {
+	flex: 1;
+	overflow: hidden;             /* hide anything that would go under the plus */
+	text-overflow: ellipsis;      /* show ... when text is too long */
+	white-space: nowrap;          /* small gap between text and plus */
+}
+
+.sidebar-menu > li.treeview > .treeview-menu > li > a > span {
+	display: block;
+	flex: 1;
+	min-width: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.fa-angle-double-right:before {
+    content: "\f101";
+    display: none;
+}
+
+/* Parent treeview links - prepare for right-side indicator */
+.sidebar-menu > li.treeview > a {
+    position: relative;
+}
+
+/* Use existing chevron <i> as a 10x10 box for the indicator */
+.sidebar-menu > li.treeview > a > .fa-angle-left {
+    position: absolute;   /* positioned inside flex row */
+    margin-left: 0;
+    right: 1px;          /* space from the right edge */
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    transition: transform 0.5s ease;  /* animate both open and close */
+}
+
+/* Rotate when the treeview is OPEN/ACTIVE (li has class 'active') */
+.sidebar-menu > li.treeview.active > a > .fa-angle-left,
+.sidebar-menu > li.treeview > a.active > .fa-angle-left {
+    transform: rotate(-180deg);
+}
+
+/* Remove default FontAwesome glyph */
+.sidebar-menu > li.treeview > a > .fa-angle-left:before {
+    content: '' !important;
+}
+
+/* Draw plus from two lines inside the box */
+.sidebar-menu > li.treeview > a > .fa-angle-left:before,
+.sidebar-menu > li.treeview > a > .fa-angle-left:after {
+    position: absolute;
+    content: '';
+    background-color: var(--sidebar-indicator-color, #4b5563);
+    border-radius: 2px;
+}
+
+/* Vertical line */
+.sidebar-menu > li.treeview > a > .fa-angle-left:before {
+    left: 4px;
+    top: 0;
+    width: 2px;
+    height: 10px;
+    opacity: 1; /* visible by default (closed state) */
+}
+
+/* Horizontal line */
+.sidebar-menu > li.treeview > a > .fa-angle-left:after {
+    left: 0;
+    top: 4px;
+    width: 10px;
+    height: 2px;
+    opacity: 1; /* visible by default (closed state) */
+}
+
+/* OPEN / ACTIVE state: hide vertical line -> minus */
+.sidebar-menu > li.treeview.menu-open > a > .fa-angle-left:before,
+.sidebar-menu > li.treeview.active > a > .fa-angle-left:before,
+.sidebar-menu > li.treeview > a.active > .fa-angle-left:before {
+    opacity: 0;
+}
+
+/* Hover/active color for indicator */
+.sidebar-menu > li.treeview:hover > a > .fa-angle-left:before,
+.sidebar-menu > li.treeview:hover > a > .fa-angle-left:after,
+.sidebar-menu > li.treeview.active > a > .fa-angle-left:before,
+.sidebar-menu > li.treeview.active > a > .fa-angle-left:after,
+.sidebar-menu > li.treeview > a.active > .fa-angle-left:before,
+.sidebar-menu > li.treeview > a.active > .fa-angle-left:after {
+        background-color: var(--sidebar-indicator-active-color, var(--sidebar-line-active-color, #e2b624));
+}
+
+/* Treeview menu container */
+.sidebar-menu > li.treeview > .treeview-menu {
+    position: relative;
+    padding-left: 20px;
+}
+
+/* Vertical spine and horizontal connector for each submenu item */
+.sidebar-menu > li.treeview > .treeview-menu > li::before {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: -8px;       /* extend above to overlap previous item */
+    bottom: -8px;    /* extend below to overlap next item */
+    width: 2px;
+    background-color: var(--sidebar-line-color, #d1d5db);
+    z-index: 1;
+}
+
+.sidebar-menu > li.treeview > .treeview-menu > li::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    width: 16px;              /* length of the elbow */
+    height: 18px;             /* vertical span for the curve */
+    background-color: transparent;
+    transform: translateY(-80%);
+    z-index: 1;
+    border-bottom: 2px solid var(--sidebar-line-color, #d1d5db);  /* horizontal segment */
+    border-right: 0;  /* small vertical on the right */
+    border-top: 0;
+    border-left: 0;
+    border-radius: 0 0 0 9px;      /* curve like the reference image */
+}
+
+/* First item: start vertical from the middle of the first row */
+.sidebar-menu > li.treeview > .treeview-menu > li:first-child::before {
+    top: 0;
+}
+
+/* Last item: end vertical at the middle of the last row */
+.sidebar-menu > li.treeview > .treeview-menu > li:last-child::before {
+    bottom: 50%;
+}
+
+/* Adjust positioning for treeview items */
+.sidebar-menu > li.treeview > .treeview-menu > li {
+    position: relative;
+}
+
+/* Ensure proper spacing for treeview menu */
+.sidebar-menu > li.treeview > .treeview-menu > li > a {
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding: 6px 18px 6px 20px; /* extra indent from connectors */
+    font-size: 12px;
+    border-radius: 8px;
+    color: var(--sidebar-sub-text, #4b5563);
+    transition: background-color 0.2s ease, color 0.2s ease,
+                transform 0.15s ease;
+}
+
+/* Submenu hover state: soft highlight and slight slide right */
+.sidebar-menu > li.treeview > .treeview-menu > li > a:hover {
+    background: var(--sidebar-sub-hover-bg, rgba(76, 161, 246, 0.06));
+    color: var(--sidebar-sub-active-text, #111827);
+    transform: translateX(2px);
+}
+
+/* Submenu active item */
+.sidebar-menu > li.treeview > .treeview-menu > li.active > a {
+    background: var(--sidebar-sub-active-bg, rgba(76, 161, 246, 0.12));
+    color: var(--sidebar-sub-active-text, #111827);
+    font-weight: 600;
+}
+
+/* Handle collapsed state - hide lines when treeview is collapsed */
+.sidebar-menu > li.treeview:not(.menu-open) > .treeview-menu {
+    display: none;
+}
+
+/* Show lines only when treeview is expanded */
+.sidebar-menu > li.treeview > .treeview-menu.menu-open {
+    display: block;
+    animation: sidebar-submenu-slide 0.80s ease-out;
+    background: var(--sidebar-sub-card-bg, var(--sidebar-bg, rgb(235 235 236 / 98%)));
+    border-radius: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    /* match parent pill's horizontal margin (2px 10px) for aligned edges */
+    margin: 4px 10px 6px 10px;
+}
+
+.sidebar-menu > li.treeview > .treeview-menu {
+    display: block;
+    background: var(--sidebar-bg, rgb(235 235 236 / 98%));
+    border-radius: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin: 4px 10px 6px 10px;
+}
+
+
+/* Adjust line colors for active/hover states */
+.sidebar-menu > li.treeview.active > .treeview-menu > li::before,
+.sidebar-menu > li.treeview:hover > .treeview-menu > li::before,
+.sidebar-menu > li.treeview > .treeview-menu > li.active::before {
+    background-color: var(--sidebar-line-active-color, #e2b624);
+}
+
+.sidebar-menu > li.treeview.active > .treeview-menu > li::after,
+.sidebar-menu > li.treeview:hover > .treeview-menu > li::after,
+.sidebar-menu > li.treeview > .treeview-menu > li.active::after {
+    border-bottom-color: var(--sidebar-line-active-color, #e2b624);
+    border-right-color: var(--sidebar-line-active-color, #e2b624);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .sidebar-menu > li.treeview > .treeview-menu {
+        padding-left: 15px;
+    }
+
+    .sidebar-menu > li.treeview > .treeview-menu::before {
+        left: -8px;
+    }
+
+    .sidebar-menu > li.treeview > .treeview-menu > li::before {
+        left: 18px;
+    }
+
+    .sidebar-menu > li.treeview > .treeview-menu > li::after {
+        left: 18px;
+    }
+    .sidebar-menu > li.treeview > .treeview-menu > li > a {
+        padding: 6px 18px 6px 35px;
+    }
+
+    /* On very small phones, keep content full-width even when the
+       sidebar is open; let the sidebar overlay the content instead
+       of shrinking it. */
+    .sidebar-open .content-wrapper,
+    .sidebar-open .right-side,
+    .sidebar-open .main-footer {
+        margin-left: 0 !important;
+        -webkit-transform: none !important;
+        -ms-transform: none !important;
+        -o-transform: none !important;
+        transform: none !important;
+    }
+}
+
+/* On small tablets / large phones (461px–767px), when the sidebar is
+   opened (.sidebar-open on body), shift the content area to the right
+   by the full sidebar width (220px). Very small phones (<460px) are
+   handled above and keep content full-width. */
+@media (min-width: 461px) and (max-width: 767px) {
+    .sidebar-open .content-wrapper,
+    .sidebar-open .right-side,
+    .sidebar-open .main-footer {
+        -webkit-transform: none !important;
+        -ms-transform: none !important;
+        -o-transform: none !important;
+        transform: none !important;
+        margin-left: 220px !important;
+    }
+}
+
+/* Extra-tight layout for very small screens */
+@media (max-width: 460px) {
+    .sidebar-menu > li.treeview > .treeview-menu {
+        padding-left: 12px;
+    }
+
+    /* bring the connectors slightly closer to text */
+    .sidebar-menu > li.treeview > .treeview-menu > li::before {
+        left: 18px;
+    }
+
+    .sidebar-menu > li.treeview > .treeview-menu > li::after {
+        left: 18px;
+        width: 14px; /* a bit shorter elbow on tiny widths */
+    }
+    .sidebar-menu > li.treeview > .treeview-menu > li > a {
+        padding: 6px 18px 6px 35px;
+    }
+}
+
+/* Sidebar collapse state adjustments
+   - Hide connectors only when sidebar is in true mini-collapsed state
+   - When offcanvas mobile sidebar is open (.sidebar-open), keep lines visible */
+.sidebar-mini.sidebar-collapse:not(.sidebar-open) .sidebar-menu > li.treeview > .treeview-menu::before,
+.sidebar-mini.sidebar-collapse:not(.sidebar-open) .sidebar-menu > li.treeview > .treeview-menu > li::after,
+.sidebar-mini.sidebar-collapse:not(.sidebar-open) .sidebar-menu > li.treeview > .treeview-menu > li::before {
+    display: none;
+}
+
+/* Smooth transitions for line color changes */
+.sidebar-menu > li.treeview > .treeview-menu::before,
+.sidebar-menu > li.treeview > .treeview-menu > li::after,
+.sidebar-menu > li.treeview > .treeview-menu > li::before {
+    transition: background-color 0.3s ease;
+}
+
+/* Submenu slide / fade-in animation */
+@keyframes sidebar-submenu-slide {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ensure proper z-index layering */
+.sidebar-menu {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fix any overlapping issues with icons */
+.sidebar-menu > li.treeview > .treeview-menu > li > a i {
+    position: relative;
+    z-index: 3;
+}
+
+/* =====================================
+   Layout adjustments for hover-open behavior in mini mode
+   ===================================================== */
+
+/* When body has .sidebar-mini.sidebar-expanded-on-hover (AdminLTE's
+   auto-expand-on-hover state), keep the content area sized for the
+   collapsed width (80px) instead of sliding out to 220px. This prevents
+   the charts/cards from shifting horizontally on hover. Clicking the
+   hamburger toggle (true expand) will still use the normal 220px margin. */
+@media (min-width: 768px) {
+    .sidebar-mini.sidebar-expanded-on-hover .content-wrapper,
+    .sidebar-mini.sidebar-expanded-on-hover .right-side,
+    .sidebar-mini.sidebar-expanded-on-hover .main-footer {
+        margin-left: 80px !important;
+    }
+
+    /* In mini-collapsed sidebar, keep a small right margin so the
+       active/hover background pill does not run flush to the rail edge. */
+    .sidebar-mini.sidebar-collapse .sidebar-menu > li > a {
+        margin-right: 10px !important;
+    }
+}
+
+/* ========================================
+   Top-level sidebar items spacing & separators
+   (does NOT affect .treeview-menu submenu items)
+   ======================================== */
+
+/* Larger click area and nicer padding for main items */
+.sidebar-menu > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;      /* keep icon + text anchored to the left */
+    text-align: left;                 /* override any center text-align from legacy CSS */
+    padding: 10px 18px;                 /* vertical, horizontal */
+    font-size: 13px;
+    margin: 2px 10px;                   /* breathing room left/right */
+    border-radius: 10px;                /* pill-ish shape */
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease,
+                transform 0.15s ease;
+}
+
+/* For parent items with plus/minus indicator, reserve extra space on the right */
+.sidebar-menu > li.treeview > a {
+    padding-right: 42px; /* extra room for indicator and spacing from text */
+}
+
+/* Space between leading icon and text */
+.sidebar-menu > li > a > i:first-child {
+    margin-right: 10px;
+    flex: 0 0 32px;                 /* fixed cell width in flex layout */
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 !important;          /* kill any padding from icon classes */
+    box-sizing: border-box;
+    font-size: 18px;
+    color: #4b5563;
+    background: rgba(148, 163, 184, 0.14); /* subtle chip behind icon */
+    text-align: center;
+    transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Optional hover background similar to reference */
+.sidebar-menu > li > a:hover {
+    background: var(--sidebar-main-hover-bg, rgba(76, 161, 246, 0.06)); /* soft blue tint */
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    transform: translateY(-1px);
+}
+
+/* Active / current section highlight */
+.sidebar-menu > li.active > a,
+.sidebar-menu > li.menu-open > a {
+    background: var(--sidebar-main-active-bg, linear-gradient(135deg, rgba(76,161,246,0.18), rgba(76,161,246,0.05)));
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    border-bottom-color: rgba(148, 163, 184, 0.3);
+}
+
+/* Override legacy skin-blue active styles for this modern white theme */
+.skin-blue .sidebar-menu > li.active > a,
+.skin-blue .sidebar-menu > li.menu-open > a {
+    border-radius: 10px; /* match new pill shape */
+    background: var(--sidebar-main-active-bg, linear-gradient(135deg, rgb(251 193 2 / 38%), rgb(17 17 17 / 5%)));
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    border-left-width: 0;              /* remove old colored bar */
+    border-left-style: solid;
+    border-left-color: transparent;
+    color: #111827;                    /* modern dark text */
+    font-family: 'Roboto-Bold';
+}
+
+/* Override legacy skin-blue hover styles for main items */
+.skin-blue .sidebar-menu > li:hover > a,
+.skin-blue .sidebar-menu > li.active > a:hover {
+    border-radius: 10px;
+    background: var(--sidebar-main-hover-bg, linear-gradient(135deg, rgb(17 17 17 / 5%), rgb(251 193 2 / 38%))); /* same soft hover tint */
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+    border-left-width: 0;
+    border-left-style: solid;
+    border-left-color: transparent;
+    color: #111827;
+}
+
+/* ========================================
+   Icon color categories (Remix Icons)
+   Colors are applied by icon class so work with dynamic menus
+   ======================================== */
+
+/* Finance - green */
+.sidebar-menu > li > a > i.ri-wallet-3-line,
+.sidebar-menu > li > a > i.ri-bill-line,
+.sidebar-menu > li > a > i.ri-price-tag-3-line,
+.sidebar-menu > li > a > i.ri-calculator-line,
+.sidebar-menu > li > a > i.ri-funds-line,
+.sidebar-menu > li > a > i.ri-wallet-2-line {
+    color: #00a65a;
+    background: rgba(0, 166, 90, 0.14);
+}
+
+/* Academics & Examinations - blue */
+.sidebar-menu > li > a > i.ri-user-3-line,
+.sidebar-menu > li > a > i.ri-medal-line,
+.sidebar-menu > li > a > i.ri-file-list-3-line,
+.sidebar-menu > li > a > i.ri-bar-chart-box-line,
+.sidebar-menu > li > a > i.ri-graduation-cap-line,
+.sidebar-menu > li > a > i.ri-task-line,
+.sidebar-menu > li > a > i.ri-book-open-line,
+.sidebar-menu > li > a > i.ri-book-2-line,
+.sidebar-menu > li > a > i.ri-calendar-check-line,
+.sidebar-menu > li > a > i.ri-ticket-2-line,
+.sidebar-menu > li > a > i.ri-id-card-line,
+.sidebar-menu > li > a > i.ri-macbook-line {
+    color: #4ca1f6;
+    background: rgba(76, 161, 246, 0.16);
+}
+
+/* Communication & Engagement - purple */
+.sidebar-menu > li > a > i.ri-building-2-line,
+.sidebar-menu > li > a > i.ri-user-shared-line,
+.sidebar-menu > li > a > i.ri-vidicon-line,
+.sidebar-menu > li > a > i.ri-video-chat-line,
+.sidebar-menu > li > a > i.ri-message-3-line,
+.sidebar-menu > li > a > i.ri-layout-3-line,
+.sidebar-menu > li > a > i.ri-user-star-line {
+    color: #9b59b6;
+    background: rgba(155, 89, 182, 0.14);
+}
+
+/* Operations & Resources - orange */
+.sidebar-menu > li > a > i.ri-node-tree,
+.sidebar-menu > li > a > i.ri-download-2-line,
+.sidebar-menu > li > a > i.ri-archive-drawer-line,
+.sidebar-menu > li > a > i.ri-bus-line,
+.sidebar-menu > li > a > i.ri-hotel-line,
+.sidebar-menu > li > a > i.ri-award-line {
+    color: #faa21c;
+    background: rgba(250, 162, 28, 0.18);
+}
+
+/* Reports & System - teal / neutral */
+.sidebar-menu > li > a > i.ri-bar-chart-2-line,
+.sidebar-menu > li > a > i.ri-settings-3-line,
+.sidebar-menu > li > a > i.ri-download-cloud-2-line {
+    color: #0ee966;
+    background: rgba(14, 233, 175, 0.16);
+}
+.sessionul {
+  margin: 0 0 6px;              /* stretch to sidebar edges */
+  padding: 6px 10px 6px;
+  border-radius: 0;             /* let background run full-width */
+  background: #e5e7eb;          /* soft grey band across sidebar */
+  border-top: 1px solid rgba(209, 213, 219, 0.9);
+  border-bottom: 1px solid rgba(209, 213, 219, 0.9);
+}
+
+.sessionul > li {
+  margin: 0;
+}
+
+/* Current Session row: pill-style label, matching Quick Links */
+.sessionul li.removehover,
+.sessionul li.quick-links-trigger-li {
+  margin-bottom: 4px;
+}
+
+.sessionul li.removehover > a,
+.sessionul li.quick-links-trigger-li > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #ffffff;
+  border: 1px solid rgba(148, 163, 184, 0.55);
+  font-size: 12px;
+  font-weight: 500;
+  color: #111827;
+  width: 100%;                  /* pill goes full width inside grey band */
+  box-sizing: border-box;
+}
+
+.sessionul li.removehover > a span,
+.sessionul li.quick-links-trigger-li > a span {
+  display: inline-block;
+}
+
+.sessionul li.removehover > a i,
+.sessionul li.quick-links-trigger-li > a i {
+  font-size: 11px;
+  color: #9ca3af;
+}
+
+/* Quick Links row: compact pill/button, clearly separate from Current Session */
+
+/* Collapsed sidebar: keep grey band and pill icons visible */
+@media (min-width: 768px) {
+  .sidebar-mini.sidebar-collapse .sessionul {
+    width: 100% !important;         /* override 50px width in main.css */
+    padding: 6px 8px;               /* a bit tighter in mini mode */
+  }
+
+  .sidebar-mini.sidebar-collapse .sessionul li.removehover > a,
+  .sidebar-mini.sidebar-collapse .sessionul li.quick-links-trigger-li > a,
+  .sidebar-mini.sidebar-collapse .sessionul li.dropdown.mega-dropdown > a.drop5 {
+    justify-content: center;        /* center icon inside pill */
+  }
+
+  /* Keep only icons visible in mini mode (text hidden) */
+  .sidebar-mini.sidebar-collapse .sessionul li.removehover > a span,
+  .sidebar-mini.sidebar-collapse .sessionul li.quick-links-trigger-li > a span,
+  .sidebar-mini.sidebar-collapse .sessionul li.dropdown a span {
+    display: none !important;
+  }
+
+  /* Reset icon box styling from main.css so anchor pill provides the shape */
+  .sidebar-mini.sidebar-collapse .sessionul li.removehover > a i,
+  .sidebar-mini.sidebar-collapse .sessionul li.quick-links-trigger-li > a i {
+    width: auto !important;
+    height: auto !important;
+    line-height: normal !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+
+  .sidebar-mini.sidebar-collapse .sessionul li.dropdown.mega-dropdown > a.drop5 .fa.pull-right {
+    margin: 0 !important;
+  }
+}
+
+/* Sidebar search bar styling for small screens (<768px) */
+@media (max-width: 767px) {
+  /* Ensure sidebar search container fits full width just under header */
+  .search-form2.navbar-form {
+    width: 100%;
+    margin: 20px 0 8px;          /* more breathing room above and below */
+    padding: 0 10px;
+    border-radius: 0;
+    border: 0;
+  }
+
+  .search-form2 .input-group {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+  }
+
+  /* Override global .search-form display:none on mobile for sidebar input */
+  .search-form2 .form-control.search-form {
+    display: block !important;
+    width: auto;
+    min-width: 0;
+    height: 36px;
+    padding: 6px 12px;
+    border-radius: 999px 0 0 999px; /* left side of pill */
+    border: 1px solid #cbd5e1;   /* visible, single border */
+    border-right: 0;             /* shared border with button */
+    background-color: #ffffff;
+    box-shadow: none;
+    font-size: 13px;
+  }
+
+  .search-form2 .input-group-btn {
+    flex: 0 0 auto;
+    position: static;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-form2 .input-group-btn .btn {
+    height: 36px !important;
+    padding: 0 14px;
+    border-radius: 0 999px 999px 0;  /* right side of pill */
+    border: 1px solid #cbd5e1;
+    border-left: 0;
+    background-color: #ffffff;
+    color: #4b5563;
+    box-shadow: none;
+    /* margin-left: 0 !important; */
+  }
+
+  .search-form2 .input-group-btn .btn i {
+    font-size: 15px;
+    line-height: 1;
+    margin-left: -11px;
+  }
+}

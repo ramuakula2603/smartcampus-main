@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Behaviour Setting API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-case { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .test-case h3 { margin-top: 0; }
+        button { padding: 10px 15px; background: #007cba; color: white; border: none; border-radius: 3px; cursor: pointer; }
+        button:hover { background: #005a87; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        .response { margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Behaviour Setting API Test</h1>
+    
+    <div class="test-case">
+        <h3>Test 1: Get Behaviour Settings</h3>
+        <button onclick="getSettings()">Get Settings</button>
+        <div class="response" id="get-response"></div>
+    </div>
+    
+    <div class="test-case">
+        <h3>Test 2: Update Behaviour Settings</h3>
+        <button onclick="updateSettings()">Update Settings</button>
+        <div class="response" id="update-response"></div>
+    </div>
+    
+    <div class="test-case">
+        <h3>Test 3: Get Settings After Update</h3>
+        <button onclick="getSettingsAfterUpdate()">Get Updated Settings</button>
+        <div class="response" id="get-after-update-response"></div>
+    </div>
+
+    <script>
+        // Configuration
+        const baseUrl = 'http://localhost/amt/api';
+        const headers = {
+            'Content-Type': 'application/json',
+            'Client-Service': 'smartschool',
+            'Auth-Key': 'schoolAdmin@'
+        };
+        
+        // Test 1: Get behaviour settings
+        function getSettings() {
+            const responseDiv = document.getElementById('get-response');
+            responseDiv.innerHTML = '<p>Sending request...</p>';
+            
+            fetch(baseUrl + '/behaviour/setting/get', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                responseDiv.innerHTML = '<pre>Error: ' + error.message + '</pre>';
+            });
+        }
+        
+        // Test 2: Update behaviour settings
+        function updateSettings() {
+            const responseDiv = document.getElementById('update-response');
+            responseDiv.innerHTML = '<p>Sending request...</p>';
+            
+            // First get the settings to get the ID
+            fetch(baseUrl + '/behaviour/setting/get', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 1 && data.data && data.data.id) {
+                    // Update with the retrieved ID
+                    const updateData = {
+                        id: data.data.id,
+                        comment_option: ['student', 'parent']
+                    };
+                    
+                    return fetch(baseUrl + '/behaviour/setting/update', {
+                        method: 'POST',
+                        headers: headers,
+                        body: JSON.stringify(updateData)
+                    });
+                } else {
+                    throw new Error('Failed to get settings ID');
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                responseDiv.innerHTML = '<pre>Error: ' + error.message + '</pre>';
+            });
+        }
+        
+        // Test 3: Get settings after update
+        function getSettingsAfterUpdate() {
+            const responseDiv = document.getElementById('get-after-update-response');
+            responseDiv.innerHTML = '<p>Sending request...</p>';
+            
+            fetch(baseUrl + '/behaviour/setting/get', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify({})
+            })
+            .then(response => response.json())
+            .then(data => {
+                responseDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(error => {
+                responseDiv.innerHTML = '<pre>Error: ' + error.message + '</pre>';
+            });
+        }
+    </script>
+</body>
+</html>

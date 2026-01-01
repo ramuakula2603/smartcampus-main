@@ -1,0 +1,210 @@
+================================================================================
+  OTHER COLLECTION REPORT API - TESTING INSTRUCTIONS
+================================================================================
+
+🎯 OBJECTIVE:
+Identify why payment ID 945 is not appearing in the API results when filters
+are applied.
+
+================================================================================
+  STEP 1: RUN THE COMPREHENSIVE TEST
+================================================================================
+
+Open this URL in your browser:
+
+    http://localhost/amt/api/RUN_THIS_TEST.php
+
+This will:
+✓ Check if payment 945 exists in the database
+✓ Verify all filter values (class, section, session, fee type, collector, date)
+✓ Test 5 filter combinations incrementally
+✓ Identify which specific filter is removing payment 945
+✓ Provide detailed analysis and recommendations
+
+================================================================================
+  STEP 2: ANALYZE THE RESULTS
+================================================================================
+
+The test will show you a table like this:
+
+Test                        | Total Records | Payment 945 Found? | Status
+----------------------------|---------------|-------------------|--------
+Test 1: Date Range Only     | 50            | ✓ YES             | PASS
+Test 2: + Fee Type          | 10            | ✓ YES             | PASS
+Test 3: + Class & Section   | 5             | ✓ YES             | PASS
+Test 4: + Session           | 3             | ✓ YES             | PASS
+Test 5: + Collector         | 0             | ✗ NO              | FAIL
+
+In this example, payment 945 disappears when the Collector filter is added.
+This means the collector ID in the JSON doesn't match the filter value.
+
+================================================================================
+  STEP 3: COMMON ISSUES AND FIXES
+================================================================================
+
+ISSUE 1: Wrong Fee Type ID
+---------------------------
+Symptom: Payment disappears at "Test 2: + Fee Type"
+Cause: Using feetype_id: "46" instead of "4" for EAMCET
+Fix: Use feetype_id: "4" in your API request
+
+ISSUE 2: Class/Section/Session Mismatch
+----------------------------------------
+Symptom: Payment disappears at "Test 3: + Class & Section" or "Test 4: + Session"
+Cause: Database values don't match filter values
+Fix: Update your filter values to match actual database values shown in test
+
+ISSUE 3: Collector ID Mismatch
+-------------------------------
+Symptom: Payment disappears at "Test 5: + Collector"
+Cause: received_by in JSON doesn't match filter value
+Fix: Check the actual received_by value in the test output and use that value
+
+ISSUE 4: Date Out of Range
+---------------------------
+Symptom: Payment disappears at "Test 1: Date Range Only"
+Cause: Payment date in JSON is outside the specified date range
+Fix: Adjust your date range to include the payment date shown in test
+
+================================================================================
+  STEP 4: TEST THE API ENDPOINT
+================================================================================
+
+After identifying the issue, test the API with corrected parameters:
+
+Using cURL:
+-----------
+curl -X POST http://localhost/amt/api/other-collection-report/filter \
+  -H "Client-Service: smartschool" \
+  -H "Auth-Key: schoolAdmin@" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "session_id": "21",
+    "class_id": "16",
+    "section_id": "26",
+    "feetype_id": "4",
+    "collect_by_id": "6",
+    "from_date": "2025-09-01",
+    "to_date": "2025-10-11"
+  }'
+
+Using Browser (Postman/Thunder Client):
+----------------------------------------
+POST http://localhost/amt/api/other-collection-report/filter
+
+Headers:
+  Client-Service: smartschool
+  Auth-Key: schoolAdmin@
+  Content-Type: application/json
+
+Body:
+{
+    "session_id": "21",
+    "class_id": "16",
+    "section_id": "26",
+    "feetype_id": "4",
+    "collect_by_id": "6",
+    "from_date": "2025-09-01",
+    "to_date": "2025-10-11"
+}
+
+================================================================================
+  STEP 5: COMPARE WITH WEB INTERFACE
+================================================================================
+
+1. Open: http://localhost/amt/financereports/other_collection_report
+
+2. Apply the same filters:
+   - Search Duration: Period
+   - Date From: 01/09/2025
+   - Date To: 11/10/2025
+   - Session: Select session 21
+   - Class: Select SR-BIPC (ID 16)
+   - Section: Select section 26
+   - Fee Type: Select EAMCET
+   - Collect By: Select MAHA LAKSHMI SALLA (200226)
+
+3. Click "Search"
+
+4. Check if payment 945 appears in the web interface
+
+5. If YES in web but NO in API: There's an API implementation issue
+   If NO in both: The data doesn't match the filters
+
+================================================================================
+  EXPECTED RESULT
+================================================================================
+
+When all filters are correct, you should see:
+
+{
+    "status": 1,
+    "message": "Other collection report retrieved successfully",
+    "summary": {
+        "total_records": 1,
+        "total_paid": "3000.00",
+        "total_discount": "0.00",
+        "total_fine": "0.00",
+        "grand_total": "3000.00"
+    },
+    "data": [
+        {
+            "payment_id": "945/1",
+            "date": "2025-09-02",
+            "admission_no": "2023412",
+            "student_name": "JOREPALLI LAKSHMI DEVI",
+            "class": "SR-BIPC (...)",
+            "fee_type": "EAMCET",
+            "collect_by": "MAHA LAKSHMI SALLA (200226)",
+            "mode": "Cash",
+            "paid": "3000.00",
+            "discount": "0.00",
+            "fine": "0.00",
+            "total": "3000.00"
+        }
+    ]
+}
+
+================================================================================
+  ADDITIONAL TESTING TOOLS
+================================================================================
+
+If you need more detailed testing:
+
+1. Test Runner (Web Interface):
+   http://localhost/amt/api/test_runner.html
+
+2. Database Direct Query:
+   http://localhost/amt/api/test_database_direct.php
+
+3. Comprehensive Debug:
+   http://localhost/amt/api/test_comprehensive_debug.php
+
+4. API Endpoint Test:
+   http://localhost/amt/api/test_api_endpoint.php
+
+================================================================================
+  NEED HELP?
+================================================================================
+
+If the test shows all filters match but the API still doesn't return the
+payment, share the test output and I'll help identify the issue.
+
+The test output will show:
+✓ Exact database values for payment 945
+✓ Which filter is removing the payment
+✓ Detailed comparison of expected vs actual values
+✓ Specific recommendations for fixing the issue
+
+================================================================================
+  START TESTING NOW
+================================================================================
+
+Run this command in your browser:
+
+    http://localhost/amt/api/RUN_THIS_TEST.php
+
+Then follow the recommendations shown in the test results.
+
+================================================================================
+

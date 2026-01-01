@@ -1,0 +1,1391 @@
+/* ========================================
+   AMT White Theme - Dashboard Top Summary Cards
+   Circular style for `topprograssstart` widgets
+   NOTE: HTML / PHP / JS logic is unchanged. Purely visual.
+   ======================================== */
+
+/* Top summary section title */
+.dashboard-summary-title {
+  font-family: "Playfair Display", serif; /* same font as header */
+  font-size: 26px;
+  font-weight: 900;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #111827;
+  margin: 0 0 10px 10px;
+  padding-bottom: 6px;
+  position: relative;
+}
+/* Card container - compact horizontal layout (TOP SUMMARY ONLY) */
+.top-summary-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+/* Left: small circular icon progress badge */
+.top-summary-card .progress-group {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  order: 1; /* ensure circle appears on the left */
+}
+
+/* Outer grey ring around icon */
+.top-summary-card .progress-group::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 3px solid #e5e9f2;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.08);
+}
+
+/* Remove colored dot at top of badge */
+.top-summary-card .progress-group::after {
+  content: none;
+}
+
+/* Keep original progress logic but hide bar visually */
+.top-summary-card .progress.progress-minibar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+}
+
+.top-summary-card .progress.progress-minibar .progress-bar {
+  border-radius: 50%;
+}
+
+/* Icon centered inside the small circle */
+.top-summary-card .ftlayer {
+  position: absolute;
+  left: 37px; /* center of the 46px circle (23px) + 14px left padding */
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #4b5563;
+  z-index: 2;
+}
+
+/* Right side: label + number stacked */
+.top-summary-card p {
+  margin: 0;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: left;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9ca3af;
+  order: 2; /* text block to the right of circle */
+}
+
+/* Main numeric value (0/0, 0/36, etc.) */
+.top-summary-card p .pull-right {
+  float: none !important;
+  margin-top: 3px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Subtle hover effect for cards */
+.top-summary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.12);
+  transition: all 0.2s ease;
+}
+
+/* =====================================================
+   Date Filter Section - White Theme Styling
+   (Just below the top progress boxes)
+   ===================================================== */
+
+.date-filter-section {
+  margin-top: 0;
+  margin-bottom: 8px ;
+  background: #f4f4f4;
+        padding: 0;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+}
+
+.date-filter-section .filter-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 8px 10px 8px 14px;
+  border: 1px solid #e5e9f2;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
+}
+
+.date-filter-section .filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.date-filter-section .filter-group label {
+  margin: 0;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* Override global form-control only inside filter bar */
+.date-filter-section .form-control {
+  height: 34px;
+  min-height: 34px;
+  /* tighter horizontal padding so text and arrow are closer */
+  padding: 6px 20px 6px 10px;
+  font-size: 13px;
+  background-color: #f9fafb;
+  border-radius: 999px !important;
+  border: 1px solid #d1d5db !important;
+  box-shadow: none !important;
+}
+
+.date-filter-section .form-control:focus {
+  outline: none;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.25) !important;
+  background-color: #ffffff;
+}
+
+/* Custom date inputs */
+.date-filter-section input[type="date"].form-control {
+  padding-right: 12px;
+}
+
+/* Apply Filter button */
+.date-filter-section .btn-apply-filter {
+  margin-left: auto;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-family: 'Roboto-Bold', sans-serif;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.25);
+  white-space: nowrap;
+}
+
+.date-filter-section .btn-apply-filter i {
+  font-size: 13px;
+}
+
+.date-filter-section .btn-apply-filter:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(14, 165, 233, 0.35);
+}
+
+.date-filter-section .btn-apply-filter:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25);
+}
+
+/* Responsive behaviour */
+@media (max-width: 991px) {
+  .date-filter-section .filter-controls {
+    flex-wrap: wrap;
+    border-radius: 14px;
+    padding: 10px 12px;
+    gap: 10px;
+  }
+
+  .date-filter-section .btn-apply-filter {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .date-filter-section .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .date-filter-section .filter-group {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .date-filter-section .filter-group .form-control {
+    width: 100%;
+  }
+
+  .date-filter-section .btn-apply-filter {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =====================================================
+   Financial Summary Cards (below date filter)
+   White card style with colored circular icons
+   Scoped only to #summary_cards so other info-boxes remain
+   ===================================================== */
+
+#summary_cards .info-box {
+  background-color: #ffffff !important;
+  border-radius: 18px;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+#summary_cards .info-box:hover {
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  transform: translateY(-2px);
+  transition: all 0.2s ease;
+}
+
+/* Left circular icon badge */
+#summary_cards .info-box .info-box-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-right: 16px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+}
+
+/* Icon colors per card type */
+#summary_cards .info-box.bg-green .info-box-icon {
+  background: rgba(34, 197, 94, 0.16);
+  color: #15803d;
+}
+
+#summary_cards .info-box.bg-red .info-box-icon {
+  background: rgba(248, 113, 113, 0.18);
+  color: #b91c1c;
+}
+
+#summary_cards .info-box.bg-blue .info-box-icon {
+  background: rgba(59, 130, 246, 0.18);
+  color: #1d4ed8;
+}
+
+/* Right side text layout */
+#summary_cards .info-box .info-box-content {
+  padding: 0;
+  margin: 0;
+}
+
+#summary_cards .info-box .info-box-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+
+#summary_cards .info-box .info-box-number {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.2;
+}
+
+#summary_cards .info-box .progress-description {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+@media (max-width: 767px) {
+  #summary_cards .info-box {
+    margin-bottom: 12px;
+    padding: 14px 16px;
+  }
+
+  #summary_cards .info-box .info-box-number {
+    font-size: 20px;
+  }
+}
+
+/* =====================================================
+   Compact Monthly Widgets Strip (above calendar)
+   Uses existing .info-box structure with new layout
+   ===================================================== */
+
+.dashboard-metric-strip-row {
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
+
+.dashboard-metric-strip {
+  margin-left: 0;
+  margin-right: 0;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 6px 10px;
+}
+
+.dashboard-metric-strip > [class*="col-"] {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.dashboard-metric-box {
+  background-color: transparent; /* ring is drawn by ::before, white fill by ::after */
+  border-radius: 999px;                 /* rounded like reference */
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  position: relative;                    /* needed for ring pseudo-elements */
+  overflow: visible;
+}
+
+.dashboard-metric-box > a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: inherit;
+  padding: 8px 14px;
+  position: relative;
+  z-index: 2; /* above overlay + border ring */
+}
+
+.dashboard-metric-box .info-box-icon {
+  width: 34px;
+  height: 26px;
+  border-radius: 6px;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  box-shadow: none;
+}
+
+.dashboard-metric-box .info-box-content {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.dashboard-metric-box .info-box-text {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+.dashboard-metric-box .info-box-number {
+  font-size: 16px;
+  font-weight: 800;
+  color: #111827;
+  margin-left: 10px;
+}
+
+/* Rotating yellow/orange ring arouhe whole info box */
+.dashboard-metric-box::before {
+  content: "";
+  position: absolute;
+  inset: -3px; /* sit just outside the card border */
+  border-radius: inherit;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg 300deg, /* invisible part of ring */
+    #f59e0b 300deg 360deg    /* single darker yellow arc */
+  );
+  opacity: 0;
+  transform: rotate(0deg);
+  transform-origin: 50% 50%;
+  transition: opacity 0.15s ease;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* White overlay that keeps the inside of the box clean */
+.dashboard-metric-box::after {
+  content: "";
+  position: absolute;
+  inset: 0; /* match the card area, leaving rotating ring outside */
+  border-radius: inherit;
+  background-color: #ffffff;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.dashboard-metric-box {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-metric-box:hover {
+  border-color: #facc15; /* solid yellow border always visible */
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.16);
+}
+
+.dashboard-metric-box:hover::before {
+  opacity: 1;
+  animation: dashboardMetricRing 4s linear infinite;
+}
+
+@keyframes dashboardMetricRing {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@media (max-width: 767px) {
+  .dashboard-metric-strip {
+    padding: 6px 8px;
+  }
+
+  .dashboard-metric-strip > [class*="col-"] {
+    margin-bottom: 6px;
+  }
+}
+
+/* =====================================================
+   Simple border sweep animation for dashboard metric boxes
+   Starts at top edge, moves around, ends as full yellow border
+   (Overrides gradient ring above for better reliability)
+   ===================================================== */
+
+/* Reset older pseudo-elements for this effect */
+.dashboard-metric-box::before,
+.dashboard-metric-box::after {
+  content: none;
+}
+
+.dashboard-metric-box {
+  border-width: 2px;
+  border-style: solid;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-metric-box:hover {
+  animation: dashboardMetricBorderSweep 4.5s ease-in-out 1 forwards;
+}
+
+@keyframes dashboardMetricBorderSweep {
+  0% {
+    border-color: #facc15 transparent transparent transparent; /* start at top */
+  }
+  12.5% {
+    border-color: #facc15 #facc15 transparent transparent; /* top + right */
+  }
+  25% {
+    border-color: transparent #facc15 transparent transparent; /* right only */
+  }
+  37.5% {
+    border-color: transparent #facc15 #facc15 transparent; /* right + bottom */
+  }
+  50% {
+    border-color: transparent transparent #facc15 transparent; /* bottom only */
+  }
+  62.5% {
+    border-color: transparent transparent #facc15 #facc15; /* bottom + left */
+  }
+  75% {
+    border-color: transparent transparent transparent #facc15; /* left only */
+  }
+  87.5% {
+    border-color: #facc15 transparent transparent #facc15; /* left + top */
+  }
+  100% {
+    border-color: #facc15 #facc15 #facc15 #facc15; /* full border */
+  }
+}
+
+/* =====================================================
+   Fees Collection & Expenses Charts (below payment boxes)
+   White card container styling for line + bar charts
+   ===================================================== */
+
+.fees-chart-card {
+  background-color: #ffffff !important;
+  border-radius: 18px !important;
+  border: 1px solid #e5e7eb !important;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08) !important;
+  overflow: hidden;
+}
+
+.fees-chart-card .box-header.with-border {
+  border-bottom: 1px solid #e5e7eb !important;
+  padding: 14px 18px !important;
+}
+
+.fees-chart-card .box-header .box-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.fees-chart-card .box-body {
+  padding: 16px 18px 18px 18px !important;
+}
+
+.fees-chart-card .chart,
+.fees-chart-card .chart-responsive {
+  background-color: #f9fafb;
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+@media (max-width: 767px) {
+  .fees-chart-card {
+    border-radius: 14px !important;
+    box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08) !important;
+  }
+}
+
+/* =====================================================
+   Overview Cards (below charts)
+   Fees / Enquiry / Library / Student Attendance
+   ===================================================== */
+
+.overview-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+  padding: 12px 18px 16px 18px;
+  margin-bottom: 16px;
+  min-height: 210px;
+}
+
+.overview-card h5 {
+  margin: 0 0 8px 0;
+  padding-bottom: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.overview-card p {
+  margin: 6px 0 4px 0;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  display: block; /* keep the whole row as a simple block so text hugs the left */
+}
+
+.overview-card p .pull-right {
+  font-size: 12px;
+  font-weight: 700;
+  float: right; /* push percentage/value fully to the right edge */
+  margin-left: 8px;
+  min-width: 40px;
+  text-align: right;
+}
+
+.overview-card .progress-group {
+  margin-top: 2px;
+}
+
+.overview-card .progress.progress-minibar {
+  height: 4px;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+  box-shadow: none;
+}
+
+.overview-card .progress.progress-minibar .progress-bar {
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+/* Fees Overview colors: Unpaid (red), Partial (amber), Paid (green) */
+.overview-fees-card p:nth-of-type(1) .pull-right {
+  color: #ef4444;
+}
+.overview-fees-card .progress-group:nth-of-type(1) .progress-bar {
+  background-color: #f97373;
+}
+
+.overview-fees-card p:nth-of-type(2) .pull-right {
+  color: #f59e0b;
+}
+.overview-fees-card .progress-group:nth-of-type(2) .progress-bar {
+  background-color: #fbbf24;
+}
+
+.overview-fees-card p:nth-of-type(3) .pull-right {
+  color: #22c55e;
+}
+.overview-fees-card .progress-group:nth-of-type(3) .progress-bar {
+  background-color: #4ade80;
+}
+
+/* Enquiry Overview colors: Active (teal), Won (green), Passive (amber), Lost (red), Dead (grey) */
+.overview-enquiry-card p:nth-of-type(1) .pull-right {
+  color: #0ea5e9;
+}
+.overview-enquiry-card .progress-group:nth-of-type(1) .progress-bar {
+  background-color: #38bdf8;
+}
+
+.overview-enquiry-card p:nth-of-type(2) .pull-right {
+  color: #22c55e;
+}
+.overview-enquiry-card .progress-group:nth-of-type(2) .progress-bar {
+  background-color: #4ade80;
+}
+
+.overview-enquiry-card p:nth-of-type(3) .pull-right {
+  color: #f59e0b;
+}
+.overview-enquiry-card .progress-group:nth-of-type(3) .progress-bar {
+  background-color: #fbbf24;
+}
+
+.overview-enquiry-card p:nth-of-type(4) .pull-right {
+  color: #ef4444;
+}
+.overview-enquiry-card .progress-group:nth-of-type(4) .progress-bar {
+  background-color: #f97373;
+}
+
+.overview-enquiry-card p:nth-of-type(5) .pull-right {
+  color: #6b7280;
+}
+.overview-enquiry-card .progress-group:nth-of-type(5) .progress-bar {
+  background-color: #cbd5f5;
+}
+
+/* Library Overview colors: Due (red), Returned (green), Issued (blue), Available (dark slate) */
+.overview-library-card p:nth-of-type(1) .pull-right {
+  color: #ef4444;
+}
+.overview-library-card .progress-group:nth-of-type(1) .progress-bar {
+  background-color: #f97373;
+}
+
+.overview-library-card p:nth-of-type(2) .pull-right {
+  color: #22c55e;
+}
+.overview-library-card .progress-group:nth-of-type(2) .progress-bar {
+  background-color: #4ade80;
+}
+
+.overview-library-card p:nth-of-type(3) .pull-right {
+  color: #2563eb;
+}
+.overview-library-card .progress-group:nth-of-type(3) .progress-bar {
+  background-color: #60a5fa;
+}
+
+.overview-library-card p:nth-of-type(4) .pull-right {
+  color: #111827;
+}
+.overview-library-card .progress-group:nth-of-type(4) .progress-bar {
+  background-color: #6b7280;
+}
+
+/* Student Today Attendance colors: Present (green), Late (amber), Absent (red), Half day (blue) */
+.overview-attendance-card p:nth-of-type(1) .pull-right {
+  color: #22c55e;
+}
+.overview-attendance-card .progress-group:nth-of-type(1) .progress-bar {
+  background-color: #4ade80;
+}
+
+.overview-attendance-card p:nth-of-type(2) .pull-right {
+  color: #f59e0b;
+}
+.overview-attendance-card .progress-group:nth-of-type(2) .progress-bar {
+  background-color: #fbbf24;
+}
+
+.overview-attendance-card p:nth-of-type(3) .pull-right {
+  color: #ef4444;
+}
+.overview-attendance-card .progress-group:nth-of-type(3) .progress-bar {
+  background-color: #f97373;
+}
+
+.overview-attendance-card p:nth-of-type(4) .pull-right {
+  color: #2563eb;
+}
+.overview-attendance-card .progress-group:nth-of-type(4) .progress-bar {
+  background-color: #60a5fa;
+}
+
+@media (max-width: 767px) {
+  .overview-card {
+    margin-bottom: 12px;
+  }
+}
+
+/* =====================================================
+   Monthly Widgets Row
+   Monthly Fees / Monthly Expenses / Student / Roles
+   Uses flex just for this row so other rows stay Bootstrap-normal
+   ===================================================== */
+
+.monthly-widgets-row {
+  display: flex;
+  flex-wrap: wrap;  /* allow wrapping on smaller screens */
+  width: 100%;      /* always occupy full parent width */
+  margin-bottom: 10px;
+}
+
+/* Make each grid column a flex item wrapper so cards can stretch to equal height */
+.monthly-widgets-row > .col-md-3 {
+  display: flex;
+}
+
+/* Desktop: distribute available width evenly among visible cards
+   (if 4 cards -> ~25% each, if 3 -> ~33%, etc.) */
+.monthly-widgets-row > .col-md-3 {
+  float: none;        /* ignore Bootstrap float inside this flex row */
+  flex: 1 1 0;        /* all items grow/shrink evenly */
+  max-width: 100%;
+}
+
+@media (max-width: 991px) {
+  /* Tablet: 2 cards per row */
+  .monthly-widgets-row > .col-md-3 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile: 1 card per row */
+  .monthly-widgets-row > .col-md-3 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+/* ==========================================
+   Monthly Widgets Row - Card Visual Style
+   Centered icon, label and value stacked
+   (Monthly Fees / Expenses / Student / Roles)
+   ========================================== */
+
+.monthly-widgets-row .info-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.08);
+  padding: 14px 12px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Make the inner link act as the flex container so icon and text are centered */
+.monthly-widgets-row .info-box > a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.monthly-widgets-row .info-box-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  margin: 0 0 8px 0;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.18);
+  float: none;              /* override AdminLTE float */
+  display: flex;            /* keep icon centered inside */
+  align-items: center;
+  justify-content: center;
+}
+
+.monthly-widgets-row .info-box .info-box-content {
+  padding: 0;
+  margin: 0;                /* remove default left margin used with floated icon */
+}
+
+.monthly-widgets-row .info-box .info-box-text {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #4b5563;
+  margin-bottom: 2px;
+}
+
+.monthly-widgets-row .info-box .info-box-number {
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Border sweep hover effect */
+.monthly-widgets-row .info-box::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid transparent;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease-out, border-color 0.25s ease-out;
+  pointer-events: none;
+}
+
+.monthly-widgets-row .info-box:hover::before {
+  transform: scaleX(1);
+}
+
+/* Per-card border colors + light gradients */
+.monthly-widgets-row .monthly-fees-card {
+  background: linear-gradient(135deg, #ecfdf3, #ffffff);
+}
+
+.monthly-widgets-row .monthly-fees-card::before {
+  border-color: rgba(34, 197, 94, 0.7);
+}
+
+.monthly-widgets-row .monthly-expenses-card {
+  background: linear-gradient(135deg, #fef2f2, #ffffff);
+}
+
+.monthly-widgets-row .monthly-expenses-card::before {
+  border-color: rgba(248, 113, 113, 0.75);
+}
+
+.monthly-widgets-row .monthly-student-card {
+  background: linear-gradient(135deg, #e0f2fe, #ffffff);
+}
+
+.monthly-widgets-row .monthly-student-card::before {
+  border-color: rgba(56, 189, 248, 0.75);
+}
+
+.monthly-widgets-row .monthly-roles-card {
+  background: linear-gradient(135deg, #fef3c7, #ffffff);
+}
+
+.monthly-widgets-row .monthly-roles-card::before {
+  border-color: rgba(245, 158, 11, 0.85);
+}
+
+@media (max-width: 767px) {
+  .monthly-widgets-row .info-box {
+    min-height: 96px;
+    padding: 12px 10px;
+  }
+}
+
+/* Roles carousel card inside monthly widgets row */
+.monthly-widgets-row .roles-carousel-box {
+  position: relative;
+}
+
+.monthly-widgets-row .roles-carousel-box .roles-carousel-inner {
+  position: relative;
+  min-height: 52px;
+}
+
+.monthly-widgets-row .roles-carousel-box .role-item {
+  display: none;
+  text-align: center;
+}
+
+.monthly-widgets-row .roles-carousel-box .role-item .info-box-text {
+  display: block;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.monthly-widgets-row .roles-carousel-box .role-item .info-box-number {
+  display: block;
+  font-size: 17px;
+}
+
+.monthly-widgets-row .roles-carousel-box .roles-carousel-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transform: translateY(-50%);
+  padding: 0 4px;
+  pointer-events: none; /* allow clicks only on buttons */
+}
+
+.monthly-widgets-row .roles-carousel-box .roles-carousel-controls .btn {
+  pointer-events: auto;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.16);
+  border: none;
+}
+
+.monthly-widgets-row .roles-carousel-box .roles-carousel-controls .btn i {
+  font-size: 11px;
+}
+
+/* Dots indicator */
+.monthly-widgets-row .roles-carousel-box .roles-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  pointer-events: auto;
+}
+
+.monthly-widgets-row .roles-carousel-box .roles-dots .role-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(156, 163, 175, 0.5);
+  transition: all 0.2s ease;
+}
+
+.monthly-widgets-row .roles-carousel-box .roles-dots .role-dot.active {
+  width: 12px;
+  background: #f59e0b;
+}
+
+/* =====================================================
+   Dashboard Calendar (FullCalendar) - Week View Focused
+   Scoped to #calendar so other calendars remain unchanged
+   ===================================================== */
+
+/* Calendar container inside the white theme box */
+.box.box-primary.borderwhite #calendar {
+  background-color: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #e5e7eb;
+  /* Slightly stronger shadow for a 3D card feel */
+  box-shadow: inset -4px 6px 40px 20px rgba(15, 23, 42, 0.14);
+  padding: 10px 12px 12px 12px;
+}
+
+/* Toolbar layout: title (center), then arrows + Today (left), then views + New Event (right) */
+#calendar .fc-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+#calendar .fc-toolbar .fc-left,
+#calendar .fc-toolbar .fc-center,
+#calendar .fc-toolbar .fc-right {
+  float: none;
+}
+
+/* Order groups: title first, then navigation, then views + New Event pushed to far right */
+#calendar .fc-toolbar .fc-center {
+  order: 1;
+  margin-right: 10px;
+}
+
+#calendar .fc-toolbar .fc-left {
+  order: 2;
+}
+
+#calendar .fc-toolbar .fc-right {
+  order: 3;
+  margin-left: auto;
+}
+
+/* Title in center */
+#calendar .fc-toolbar .fc-center h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+  letter-spacing: 0.02em;
+}
+
+/* FullCalendar buttons -> neutral pill style */
+#calendar .fc-button {
+  background: #f3f4f6 !important;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  border-radius: 999px;
+  padding: 4px 10px;
+  box-shadow: none;
+  text-transform: capitalize;
+  font-size: 12px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#calendar .fc-button:hover {
+  background: #e5e7eb;
+  border-color: #d1d5db;
+}
+
+#calendar .fc-state-active,
+#calendar .fc-button.fc-state-active {
+  background: linear-gradient(135deg, #0ea5e9, #6366f1) !important;
+  color: #ffffff;
+  border-color: transparent;
+}
+
+#calendar .fc-button-group .fc-button {
+  margin-left: 2px;
+}
+
+/* Icons for Month / Week / Day buttons using Font Awesome */
+#calendar .fc-month-button::before,
+#calendar .fc-agendaWeek-button::before,
+#calendar .fc-agendaDay-button::before {
+  font-family: "FontAwesome";
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  margin-right: 4px;
+}
+
+/* Calendar icon for Month */
+#calendar .fc-month-button::before {
+  content: "\f073"; /* fa-calendar */
+}
+
+/* Grid icon for Week */
+#calendar .fc-agendaWeek-button::before {
+  content: "\f00a"; /* fa-th-list as minimal grid/list */
+}
+
+/* Clock icon for Day */
+#calendar .fc-agendaDay-button::before {
+  content: "\f017"; /* fa-clock-o */
+}
+
+/* Week grid container */
+#calendar .fc-view-container,
+#calendar .fc-view {
+  background-color: #f9fafb;
+  border-radius: 14px;
+  border: 1px solid rgba(15, 23, 42, 0.05);
+  overflow: hidden;
+}
+
+/* Grid lines - soften solid greys */
+#calendar .fc-widget-header th,
+#calendar .fc-widget-content {
+  border-color: rgba(15, 23, 42, 0.05);
+}
+
+/* Day headers */
+#calendar .fc-day-header {
+  padding: 6px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #6b7280;
+  background-color: #f3f4f6;
+}
+
+/* Today highlight */
+#calendar .fc-day.fc-today,
+#calendar .fc-agendaDay-view .fc-today {
+  background-color: rgba(59, 130, 246, 0.06);
+}
+
+/* Weekend shading (subtle) */
+#calendar .fc-sat,
+#calendar .fc-sun {
+  background-color: rgba(249, 250, 251, 0.8);
+}
+
+/* Event appearance: pill tags (respect event's own background color) */
+#calendar .fc-event {
+  border-radius: 999px;
+  border: none;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.18);
+}
+
+#calendar .fc-event:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.22);
+}
+
+/* Make all-day / timed events consistent */
+#calendar .fc-agendaWeek-view .fc-event,
+#calendar .fc-agendaDay-view .fc-event {
+  font-size: 11px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 767px) {
+  #calendar .fc-toolbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+
+  #calendar .fc-toolbar .fc-center h2 {
+    font-size: 14px;
+  }
+
+  #calendar .fc-button {
+    padding: 3px 8px;
+    font-size: 11px;
+  }
+}
+
+/* New Event button (custom FullCalendar button) */
+#calendar .fc-newEventButton-button {
+  background: #111827 !important;
+  border-color: transparent;
+  color: #f9fafb;
+  border-radius: 999px;
+  /* Match general button sizing, just a bit wider */
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  /* Softer lift so it doesn't overpower other buttons */
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.35);
+}
+
+#calendar .fc-newEventButton-button::before {
+  font-family: "FontAwesome";
+  content: "\f067"; /* fa-plus */
+  margin-right: 6px;
+}
+
+#calendar .fc-newEventButton-button:hover {
+  filter: brightness(1.03);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.4);
+}
+
+#calendar .fc-newEventButton-button:active {
+  box-shadow: 0 3px 10px rgba(15, 23, 42, 0.35);
+}
+
+/* Navigation buttons (prev / next / Today) with subtle gradient */
+#calendar .fc-left .fc-button {
+  background: linear-gradient(135deg, #3498db, #2980b9) !important;
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.25);
+}
+
+#calendar .fc-left .fc-button:hover {
+  filter: brightness(1.05);
+  transform: translateY(-0.5px);
+  box-shadow: 0 6px 16px rgba(52, 152, 219, 0.35);
+}
+
+#calendar .fc-left .fc-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(52, 152, 219, 0.2);
+}
+
+/* Empty-state hint inside dashboard calendar */
+#calendar .fc-view-container {
+  position: relative;
+}
+
+#calendar .fc-empty-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 6px 14px;
+  font-size: 12px;
+  color: #6b7280;
+  background: rgba(255, 255, 255, 0.98);
+  border-radius: 999px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.18);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* =====================================================
+   Calendar To Do List (eventcalendar.php)
+   Matches modern calendar styling, but scoped so other
+   pages are unaffected.
+   ===================================================== */
+
+.calendar-todo-box {
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08);
+  overflow: hidden;
+}
+
+.calendar-todo-box .box-header {
+  border-bottom: 1px solid #e5e7eb;
+  padding: 10px 14px;
+}
+
+.calendar-todo-box .box-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.calendar-todo-box .box-tools .btn {
+  border-radius: 999px;
+}
+
+.calendar-todo-item {
+  padding: 8px 12px !important;
+  align-items: flex-start;
+  border-radius: 10px;
+  transition: background-color 0.18s ease, box-shadow 0.18s ease, transform 0.14s ease;
+}
+
+.calendar-todo-item + .todo_divider {
+  margin: 0 12px 2px;
+  border-bottom: 1px dashed #e5e7eb;
+}
+
+.calendar-todo-item .media-left {
+  padding-right: 8px;
+}
+
+.calendar-todo-item input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+}
+
+.calendar-todo-item .tododesc {
+  margin: 0 0 3px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #374151;
+  transition: color 0.18s ease;
+}
+
+.calendar-todo-item .tododate {
+  font-size: 11px;
+  color: #9ca3af;
+  transition: color 0.18s ease;
+}
+
+.calendar-todo-item .tododate a {
+  margin-left: 8px;
+}
+
+.calendar-todo-box .todopagination {
+  padding: 6px 12px 10px;
+}
+
+/* Hover state: subtle lift and background highlight */
+.calendar-todo-item:hover {
+  background-color: rgba(59, 130, 246, 0.03);
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+  transform: translateY(-1px);
+}
+
+/* Checked state: slightly greener background + soft scale */
+.calendar-todo-item:has(input[type="checkbox"]:checked) {
+  background-color: rgba(22, 163, 74, 0.06);
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.18);
+  transform: translateY(-1px) scale(0.995);
+}
+
+/* Completed items already use inline line-through + green color.
+   So we just tune the surrounding colors when that style is present. */
+.calendar-todo-item .tododesc[style*="line-through"] {
+  color: #15803d; /* richer green */
+}
+
+.calendar-todo-item .tododesc[style*="line-through"] + .tododate,
+.calendar-todo-item .tododate[style*="line-through"] {
+  color: #65a30d;
+}
+
+
+/* ==========================================
+   Calendar micro-polish: today, time axis,
+   grid hierarchy and hover states
+   ========================================== */
+
+/* Today column header - stronger focus with chip */
+#calendar .fc-day-header.fc-today {
+  color: #1d4ed8;
+  background: linear-gradient(90deg, rgba(59,130,246,0.08), rgba(59,130,246,0));
+  position: relative;
+}
+
+/* Time axis + grid hierarchy for agenda (week/day) views */
+#calendar .fc-agenda-view .fc-axis {
+  font-size: 10px;
+  color: #9ca3af;
+  padding-right: 4px;
+  border-color: transparent;
+}
+
+/* Full hour vs minor slot separation */
+#calendar .fc-agenda-view .fc-slats tr.fc-minor .fc-widget-content {
+  border-top-style: dashed;
+  border-top-color: #e5e7eb;
+}
+
+#calendar .fc-agenda-view .fc-slats tr:not(.fc-minor) .fc-widget-content {
+  border-top-color: #d1d5db;
+}
+
+/* Subtle hover on time slots and all-day cells */
+#calendar .fc-agenda-view .fc-slats .fc-widget-content:hover,
+#calendar .fc-agendaWeek-view .fc-day:hover,
+#calendar .fc-agendaDay-view .fc-day:hover {
+  background-color: rgba(59, 130, 246, 0.035);
+}
+
+/* Now indicator line (if enabled in FullCalendar) */
+#calendar .fc-now-indicator-line {
+  border-color: #fb923c; /* warm accent */
+  border-width: 1.5px 0 0 0;
+}
+
+#calendar .fc-now-indicator-arrow {
+  border-top-color: #fb923c;
+}

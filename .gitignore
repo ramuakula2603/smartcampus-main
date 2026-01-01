@@ -1,0 +1,52 @@
+# Application logs (exclude actual log files but keep framework files)
+application/logs/log-*.php
+application/logs/*.log
+!application/logs/index.php
+
+# API logs  
+api/application/logs/log-*.php
+api/application/logs/*.log
+!api/application/logs/index.php
+
+# System generated files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Cache files
+application/cache/*
+!application/cache/.htaccess
+!application/cache/index.html
+
+# Upload directories (optional - uncomment if needed)
+# uploads/*
+# !uploads/.htaccess
+# !uploads/index.html
+
+# Error logs
+error_log
+*.log
+
+# Backup files
+*.bak
+*.backup
+*~
+# Test and debug files
+check_index.php
+test_error.php

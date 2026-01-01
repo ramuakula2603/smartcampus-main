@@ -1,0 +1,142 @@
+/* ========================================
+   GRAY THEME - HEADER COLOR OVERRIDES
+   ======================================== */
+:root {
+  /* Primary Colors */
+  --header-primary: #3c8dbc;
+  --header-accent: #5bc0de;
+  --header-success: #00a65a;
+  --header-danger: #dd4b39;
+  --header-warning: #f39c12;
+  
+  /* Header Specific */
+  --header-bg: #82858c;
+  --header-border: rgba(255, 255, 255, 0.1);
+  --header-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+  
+  /* Text Colors */
+  --header-text-primary: #2c3a5b;
+  --header-text-secondary: #586d98;
+  --header-text-muted: #a39a9a;
+  
+  /* Icon Colors */
+  --header-icon-color: #e8e9eb;
+  --header-icon-hover: #554d4d;
+  --header-icon-bg-hover: rgba(255, 255, 255, 0.15);
+  
+  /* Search */
+  --search-bg: #ffffff;
+  --search-border: #d2d6de;
+  --search-focus-bg: #ffffff;
+  --search-focus-border: #3c8dbc;
+  --search-focus-shadow: rgba(60, 141, 188, 0.15);
+  
+  /* Dropdown */
+  --dropdown-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --dropdown-border: #d2d6de;
+  
+  /* Neutral Colors */
+  --neutral-100: #f4f4f5;
+  --neutral-200: #e0e6ed;
+  --neutral-300: #d2d6de;
+  --neutral-600: #666666;
+  --neutral-900: #333333;
+  
+  /* Sidebar Colors */
+  --sidebar-bg: #f4f4f5;
+  --sidebar-line-color: #d2d6de;
+  --sidebar-line-active-color: #f39c12;
+  --sidebar-indicator-color: #3b495e;
+  --sidebar-sub-hover-bg: rgba(60, 141, 188, 0.06);
+  --sidebar-sub-active-bg: rgba(60, 141, 188, 0.14);
+  --sidebar-sub-text: #3b495e;
+  --sidebar-sub-active-text: #222222;
+  --sidebar-indicator-active-color: #f39c12;
+  --sidebar-sub-card-bg: #f4f4f5;
+  /* Sidebar main item states */
+  --sidebar-main-hover-bg: linear-gradient(135deg, rgba(244, 244, 245, 0.9), rgba(210, 214, 222, 0.9));
+  --sidebar-main-active-bg: linear-gradient(135deg, rgba(60, 141, 188, 0.18), rgba(60, 141, 188, 0.05));
+}
+
+/* Override skin file hardcoded colors with CSS variables */
+.skin-blue .main-header .navbar {
+  background-color: var(--header-bg) !important;
+}
+
+.skin-blue .main-header .logo {
+  background-color: var(--header-bg) !important;
+}
+
+/* Force icon colors to use CSS variables */
+.skin-blue .main-header .navbar .nav > li > a {
+  color: var(--header-icon-color) !important;
+}
+
+.skin-blue .main-header .navbar .nav > li > a:hover {
+  color: var(--header-icon-hover) !important;
+}
+
+/* Title color override */
+.main-header .sidebar-session {
+  color: var(--header-text-primary) !important;
+}
+
+.box.box-primary{border-top-color:#3c8dbc;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-info{border-top-color:#3b495e;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-danger{border-top-color:#dd4b39;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-warning{border-top-color:#f39c12;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-success{border-top-color: #3b495e;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.box-default{border-top-color:#d2d6de;box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);}.box.collapsed-box .box-body,.box.collapsed-box .box-footer{display:none}.box .nav-stacked>li{border-bottom:1px solid #f4f4f4;margin:0}.box .nav-stacked>li:last-of-type{border-bottom:none}.box.height-control .box-body{max-height:300px;overflow:auto}.box .border-right{border-right:1px solid #f4f4f4}
+
+.nav-tabs-custom>.nav-tabs>li.active{border-top-color:#3b495e;}
+
+.btn-primary{background-color: #425458;border-color: #5d7479;transition: .3s;}
+.btn-primary:hover,.btn-primary:active,.btn-primary.hover{background-color: #012e48;}
+.btn-success{background-color:#00a65a;border-color:#232323}
+.btn-success:hover,.btn-success:active,.btn-success.hover{background-color:#070707}
+.btn-info{background-color: #425458;border-color: #5d7479;}
+.btn-info:hover,.btn-info:active,.btn-info.hover{background-color: #012e48;}
+.btn-danger{background-color:#dd4b39;border-color:#d73925}
+.sidebar-menu{list-style:none;margin:0;padding:0;font-family:'Roboto-Bold';}
+.sessionul{font-family:'Roboto-Bold';}
+/*.verttop {padding-top: 56px;}
+.verttop38{padding-top: 38px;}*/
+/*END smart school 24 april*/
+
+/*begin 13 may*/
+.slimScrollBar{background: #3b495e !important;}	
+
+/*end 13 may*/
+
+.removehover{color: #333 !important}
+.removehover:hover{color: #333 !important}
+ 
+.modal-header {background: linear-gradient(40deg,#3b495e,#42677a); color: #fff;}
+
+/*.close:focus, .close:hover {
+    color: #bac0ca;
+    outline: none;
+    }*/
+
+
+
+/*19 august*/
+
+.selector-list li:hover{background:#3b495e;}
+
+/*end 19 August*/
+
+/*9 september*/
+
+
+.pagetitleh {background: #3b495e;}
+.chosebtn:hover{background: #425559;color:#fff;border-color: #5d7479;}
+.chosebtn{background: #3b495e;border: 1px solid #03324e;} 
+ .anchorbtn{background: transparent !important; border:0 !important; color: #0084B4 !important; font-size: 16px;box-shadow: none !important; } 
+ .anchorbtn:focus,
+ .anchorbtn:hover{outline:0 !important;background: transparent !important; border:0 !important; 
+  color: #000 !important; text-decoration: none;}
+.fixedmenu{background: #ecf0f1 !important;}
+/*end 19 August*/
+
+@media (max-width: 767px) {
+ .sidebar-collapse .sessionul li.removehover a i{width: auto;}
+}
+
+.classlist li a:hover {color: #ece9e9;}
+.classlist li a {color: #fff;text-decoration: none;}

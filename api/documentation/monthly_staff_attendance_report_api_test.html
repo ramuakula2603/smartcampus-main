@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Staff Attendance Report API - Test Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            background: #f9f9f9;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .response-container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+        }
+        
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .response-header h3 {
+            color: #333;
+        }
+        
+        .copy-btn {
+            padding: 8px 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+        
+        .copy-btn:hover {
+            background: #0056b3;
+        }
+        
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #667eea;
+            font-size: 1.2em;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .info-box {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        
+        .stat-card .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .attendance-table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        .attendance-table th,
+        .attendance-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        .attendance-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .attendance-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .badge-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .badge-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .badge-default {
+            background: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Monthly Staff Attendance Report API</h1>
+            <p>Test Interface for Staff Attendance Report Endpoints</p>
+        </div>
+        
+        <div class="content">
+            <!-- API Endpoint 1: Monthly Report -->
+            <div class="section">
+                <h2>📅 Get Monthly Staff Attendance Report</h2>
+                <div class="info-box">
+                    <strong>Endpoint:</strong> POST /api/monthly-staff-attendance/report<br>
+                    <strong>Description:</strong> Retrieves comprehensive monthly attendance report with daily records, summaries, and percentage calculations.
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Staff Role (Optional):</label>
+                    <select id="role">
+                        <option value="select">All Roles</option>
+                        <option value="Teacher">Teacher</option>
+                        <option value="Admin">Admin</option>
+                        <option value="Accountant">Accountant</option>
+                        <option value="Librarian">Librarian</option>
+                        <option value="Receptionist">Receptionist</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="month">Month (Required):</label>
+                    <select id="month">
+                        <option value="">Select Month</option>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October" selected>October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="year">Year (Optional):</label>
+                    <input type="number" id="year" placeholder="2024" value="2024" min="2000" max="2100">
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-primary" onclick="getMonthlyReport()">📊 Get Monthly Report</button>
+                    <button class="btn-secondary" onclick="clearResponse('response1')">🗑️ Clear</button>
+                </div>
+                
+                <div id="response1" class="response-container" style="display: none;">
+                    <div class="response-header">
+                        <h3>API Response</h3>
+                        <button class="copy-btn" onclick="copyResponse('response1-content')">📋 Copy</button>
+                    </div>
+                    <div id="stats1" class="stats-grid"></div>
+                    <div id="table1"></div>
+                    <pre id="response1-content"></pre>
+                </div>
+            </div>
+            
+            <!-- API Endpoint 2: Available Periods -->
+            <div class="section">
+                <h2>📆 Get Available Periods</h2>
+                <div class="info-box">
+                    <strong>Endpoint:</strong> POST /api/monthly-staff-attendance/available-periods<br>
+                    <strong>Description:</strong> Returns list of available years, months, and staff roles.
+                </div>
+                
+                <div class="button-group">
+                    <button class="btn-success" onclick="getAvailablePeriods()">📆 Get Available Periods</button>
+                    <button class="btn-secondary" onclick="clearResponse('response2')">🗑️ Clear</button>
+                </div>
+                
+                <div id="response2" class="response-container" style="display: none;">
+                    <div class="response-header">
+                        <h3>API Response</h3>
+                        <button class="copy-btn" onclick="copyResponse('response2-content')">📋 Copy</button>
+                    </div>
+                    <pre id="response2-content"></pre>
+                </div>
+            </div>
+            
+            <!-- Configuration Section -->
+            <div class="section">
+                <h2>⚙️ API Configuration</h2>
+                <div class="form-group">
+                    <label for="baseUrl">Base URL:</label>
+                    <input type="text" id="baseUrl" value="http://localhost/amt/api">
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientService">Client-Service Header:</label>
+                    <input type="text" id="clientService" value="smartschool">
+                </div>
+                
+                <div class="form-group">
+                    <label for="authKey">Auth-Key Header:</label>
+                    <input type="text" id="authKey" value="schoolAdmin@">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Get Monthly Staff Attendance Report
+         */
+        async function getMonthlyReport() {
+            const responseDiv = document.getElementById('response1');
+            const responseContent = document.getElementById('response1-content');
+            const statsDiv = document.getElementById('stats1');
+            const tableDiv = document.getElementById('table1');
+            
+            responseDiv.style.display = 'block';
+            responseContent.innerHTML = '<div class="loading"><div class="spinner"></div>Loading...</div>';
+            statsDiv.innerHTML = '';
+            tableDiv.innerHTML = '';
+            
+            const baseUrl = document.getElementById('baseUrl').value;
+            const clientService = document.getElementById('clientService').value;
+            const authKey = document.getElementById('authKey').value;
+            
+            const role = document.getElementById('role').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+            
+            if (!month) {
+                responseContent.innerHTML = '<div style="color: red;">Month is required!</div>';
+                return;
+            }
+            
+            const requestData = {
+                role: role !== 'select' ? role : null,
+                month: month,
+                year: year ? parseInt(year) : null
+            };
+            
+            try {
+                const response = await fetch(`${baseUrl}/monthly-staff-attendance/report`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Client-Service': clientService,
+                        'Auth-Key': authKey
+                    },
+                    body: JSON.stringify(requestData)
+                });
+                
+                const data = await response.json();
+                responseContent.textContent = JSON.stringify(data, null, 2);
+                
+                // Display stats if successful
+                if (data.status === 1) {
+                    displayStats(data, statsDiv);
+                    displayAttendanceTable(data, tableDiv);
+                }
+                
+            } catch (error) {
+                responseContent.innerHTML = `<div style="color: red;">Error: ${error.message}</div>`;
+            }
+        }
+        
+        /**
+         * Get Available Periods
+         */
+        async function getAvailablePeriods() {
+            const responseDiv = document.getElementById('response2');
+            const responseContent = document.getElementById('response2-content');
+            
+            responseDiv.style.display = 'block';
+            responseContent.innerHTML = '<div class="loading"><div class="spinner"></div>Loading...</div>';
+            
+            const baseUrl = document.getElementById('baseUrl').value;
+            const clientService = document.getElementById('clientService').value;
+            const authKey = document.getElementById('authKey').value;
+            
+            try {
+                const response = await fetch(`${baseUrl}/monthly-staff-attendance/available-periods`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Client-Service': clientService,
+                        'Auth-Key': authKey
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const data = await response.json();
+                responseContent.textContent = JSON.stringify(data, null, 2);
+                
+            } catch (error) {
+                responseContent.innerHTML = `<div style="color: red;">Error: ${error.message}</div>`;
+            }
+        }
+        
+        /**
+         * Display Statistics Cards
+         */
+        function displayStats(data, container) {
+            if (!data.data || data.data.length === 0) return;
+            
+            let html = `
+                <div class="stat-card">
+                    <h4>Total Staff</h4>
+                    <div class="value">${data.total_staff}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Days</h4>
+                    <div class="value">${data.total_days}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Month</h4>
+                    <div class="value">${data.filters_applied.month}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Year</h4>
+                    <div class="value">${data.filters_applied.year}</div>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+        
+        /**
+         * Display Attendance Table
+         */
+        function displayAttendanceTable(data, container) {
+            if (!data.data || data.data.length === 0) return;
+            
+            let html = '<table class="attendance-table">';
+            html += '<thead><tr>';
+            html += '<th>Staff Name</th>';
+            html += '<th>Employee ID</th>';
+            html += '<th>Role</th>';
+            html += '<th>Present</th>';
+            html += '<th>Absent</th>';
+            html += '<th>Late</th>';
+            html += '<th>Half Day</th>';
+            html += '<th>Attendance %</th>';
+            html += '<th>Status</th>';
+            html += '</tr></thead><tbody>';
+            
+            data.data.forEach(staff => {
+                const badgeClass = staff.attendance_status_class === 'success' ? 'badge-success' :
+                                  staff.attendance_status_class === 'danger' ? 'badge-danger' : 'badge-default';
+                
+                html += '<tr>';
+                html += `<td>${staff.staff_info.name} ${staff.staff_info.surname}</td>`;
+                html += `<td>${staff.staff_info.employee_id}</td>`;
+                html += `<td>${staff.staff_info.role}</td>`;
+                html += `<td>${staff.attendance_summary.Present || 0}</td>`;
+                html += `<td>${staff.attendance_summary.Absent || 0}</td>`;
+                html += `<td>${staff.attendance_summary.Late || 0}</td>`;
+                html += `<td>${staff.attendance_summary['Half Day'] || 0}</td>`;
+                html += `<td><strong>${staff.attendance_percentage_display}%</strong></td>`;
+                html += `<td><span class="badge ${badgeClass}">${staff.attendance_status}</span></td>`;
+                html += '</tr>';
+            });
+            
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+        
+        /**
+         * Copy response to clipboard
+         */
+        function copyResponse(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Response copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+        
+        /**
+         * Clear response
+         */
+        function clearResponse(responseId) {
+            const responseDiv = document.getElementById(responseId);
+            responseDiv.style.display = 'none';
+            
+            if (responseId === 'response1') {
+                document.getElementById('stats1').innerHTML = '';
+                document.getElementById('table1').innerHTML = '';
+            }
+        }
+    </script>
+</body>
+</html>

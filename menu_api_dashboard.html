@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu API Testing Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .card { background: #f9f9f9; border: 1px solid #ddd; padding: 20px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; color: #155724; }
+        .warning { background: #fff3cd; border-color: #ffeaa7; color: #856404; }
+        .error { background: #f8d7da; border-color: #f5c6cb; color: #721c24; }
+        .btn { display: inline-block; padding: 10px 15px; background: #007cba; color: white; text-decoration: none; border-radius: 3px; margin: 5px; }
+        .btn:hover { background: #005a87; }
+        .btn-secondary { background: #6c757d; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-danger { background: #dc3545; }
+        h1, h2 { color: #333; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .step { margin: 20px 0; }
+        .step-number { background: #007cba; color: white; border-radius: 50%; width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Menu API Testing Dashboard</h1>
+    
+    <div class="card warning">
+        <h2>⚠️ Important Notes</h2>
+        <ul>
+            <li>Make sure your XAMPP Apache and MySQL services are running</li>
+            <li>Ensure you have a database named "school" (or update the connection settings in the test files)</li>
+            <li>Backup your database before running setup scripts</li>
+        </ul>
+    </div>
+
+    <div class="step">
+        <h2><span class="step-number">1</span>Database Setup & Verification</h2>
+        <div class="card">
+            <p>First, let's check if all required database tables exist and have data:</p>
+            <a href="check_menu_tables.php" class="btn" target="_blank">Check Database Tables</a>
+            <a href="setup_sample_menu_data.php" class="btn btn-warning" target="_blank">Setup Sample Menu Data</a>
+        </div>
+    </div>
+
+    <div class="step">
+        <h2><span class="step-number">2</span>Staff & Permissions Debug</h2>
+        <div class="card">
+            <p>Check staff members and their permissions:</p>
+            <a href="test_menu_api.php" class="btn" target="_blank">View All Staff Members</a>
+            <a href="debug_menu_permissions.php?staff_id=1" class="btn btn-secondary" target="_blank">Debug Staff ID 1 Permissions</a>
+        </div>
+    </div>
+
+    <div class="step">
+        <h2><span class="step-number">3</span>API Testing</h2>
+        <div class="card">
+            <p>Test the simplified menu API (no authentication required):</p>
+            <a href="test_simple_menu_api.php?staff_id=1" class="btn" target="_blank">Test Simple Menu API</a>
+            <a href="test_debug_menu.php?staff_id=1" class="btn btn-secondary" target="_blank">Test Debug Menu API</a>
+        </div>
+    </div>
+
+    <div class="step">
+        <h2><span class="step-number">4</span>Direct API Endpoints</h2>
+        <div class="card">
+            <p>Test API endpoints directly:</p>
+            <table>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>Description</th>
+                    <th>Test</th>
+                </tr>
+                <tr>
+                    <td><code>/api/teacher/menu</code></td>
+                    <td>POST</td>
+                    <td>Main menu API - send {"staff_id": 1}</td>
+                    <td><a href="test_simple_menu_api.php?staff_id=1" target="_blank" class="btn">Test</a></td>
+                </tr>
+                <tr>
+                    <td><code>/api/teacher/debug-menu?staff_id=1</code></td>
+                    <td>GET</td>
+                    <td>Debug menu (no auth required)</td>
+                    <td><a href="http://localhost/amt/api/teacher/debug-menu?staff_id=1" target="_blank" class="btn">Test</a></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="step">
+        <h2><span class="step-number">5</span>Common Issues & Solutions</h2>
+        <div class="card">
+            <h3>If you see "No menus found":</h3>
+            <ul>
+                <li>✅ Run the database table check first</li>
+                <li>✅ Setup sample menu data if tables are empty</li>
+                <li>✅ Ensure staff members have roles assigned</li>
+                <li>✅ Check that roles have proper permissions</li>
+            </ul>
+
+            <h3>If you see "Authentication failed":</h3>
+            <ul>
+                <li>✅ <strong>Not applicable anymore!</strong> The API no longer requires authentication</li>
+                <li>✅ Just send a POST request with staff_id in the body</li>
+                <li>✅ Use the simple test tool above</li>
+            </ul>
+
+            <h3>If you see "Staff not found":</h3>
+            <ul>
+                <li>✅ Check the staff table in the database</li>
+                <li>✅ Ensure staff member is active (is_active = 1)</li>
+                <li>✅ Try with different staff IDs</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card success">
+        <h2>✅ Expected Working Flow</h2>
+        <ol>
+            <li><strong>Database Check:</strong> All required tables exist with sample data</li>
+            <li><strong>Simple API Call:</strong> POST to /api/teacher/menu with {"staff_id": 123}</li>
+            <li><strong>Menu Response:</strong> Returns personalized menu based on staff role and permissions</li>
+        </ol>
+        <p><strong>No authentication required!</strong> Just send the staff_id in a POST request.</p>
+    </div>
+
+    <div class="card">
+        <h2>📋 API Usage Example</h2>
+        <h3>Simple POST Request (No Authentication Required):</h3>
+        <pre style="background: #f8f9fa; padding: 10px; border-radius: 3px;">
+URL: POST http://localhost/amt/api/teacher/menu
+Headers: Content-Type: application/json
+Body: {"staff_id": 123}
+        </pre>
+
+        <h3>cURL Example:</h3>
+        <pre style="background: #f8f9fa; padding: 10px; border-radius: 3px;">
+curl -X POST http://localhost/amt/api/teacher/menu \
+  -H "Content-Type: application/json" \
+  -d '{"staff_id": 123}'
+        </pre>
+
+        <h3>JavaScript Fetch Example:</h3>
+        <pre style="background: #f8f9fa; padding: 10px; border-radius: 3px;">
+fetch('http://localhost/amt/api/teacher/menu', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({staff_id: 123})
+})
+.then(response => response.json())
+.then(data => console.log(data));
+        </pre>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px; padding: 20px; background: #f8f9fa; border-radius: 5px;">
+        <p><strong>Need Help?</strong> Start with the Database Setup step and work through each step in order.</p>
+        <p>The debug endpoints provide detailed information to help troubleshoot issues.</p>
+    </div>
+</body>
+</html>
